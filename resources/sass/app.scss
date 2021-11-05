@@ -1,0 +1,42 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+body {
+    font-family: 'Roboto';
+}
+
+.hero-container {
+    background-image: url('/images/hero.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    position: relative;
+}
+
+#block-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    h1 {
+        text-align: center;
+        font-size: 3.5rem;
+    }
+    p {
+        font-size: 1.5rem;
+    }
+    #block-buttons {
+        a {
+            width: 5rem;
+            font-size: 1.2rem;
+        }
+    }
+}
