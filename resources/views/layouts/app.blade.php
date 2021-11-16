@@ -7,19 +7,20 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Laravel Ecommerce</title>
+
+    <!-- Font awesome -->
+    <!-- Your font awesome kit link here -->
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
+        <!-- navbar -->
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -75,10 +76,38 @@
                 </div>
             </div>
         </nav>
+        <!-- !navbar -->
 
+        <!-- main -->
         <main>
             @yield('content')
         </main>
+        <!-- main -->
+
+        <!-- footer -->
+        <footer class="bg-dark text-white py-3 mt-4">
+            <div class="row">
+                <div class="col-md-8 text-center">
+                    <p>Copyright&copy;. All rights reserved by Mateja</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Follow us on:</p>
+                        </div>
+                        <div class="col-md-4 d-flex justify-content-between">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                        </div>
+                        <div class="col-md-5"></div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- footer -->
     </div>
 </body>
 </html>
