@@ -85,7 +85,7 @@
         <!-- main -->
 
         <!-- footer -->
-        <footer class="bg-dark text-white py-3 mt-4">
+        <footer class="bg-dark text-white py-3">
             <div class="row">
                 <div class="col-md-8 text-center">
                     <p>Copyright&copy;. All rights reserved by Mateja</p>
