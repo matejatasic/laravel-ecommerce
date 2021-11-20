@@ -11,7 +11,8 @@ body {
     font-family: 'Roboto';
 }
 
-.hero-container {
+// Hero
+#hero-container {
     background-image: url('/images/hero.png');
     background-position: center center;
     background-repeat: no-repeat;
@@ -38,5 +39,26 @@ body {
             width: 5rem;
             font-size: 1.2rem;
         }
+    }
+}
+
+#filter-btns {
+    button {
+        width: 5rem;
+    }
+}
+
+#blog-container {
+    background: rgb(168, 167, 167);
+    height: 100vh;
+    
+    #blog-heading {
+        height: 10vh;
+    }
+}
+
+footer {
+    p {
+        margin-bottom: 0rem;
     }
 }
