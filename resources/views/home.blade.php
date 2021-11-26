@@ -39,63 +39,28 @@
 
         <!-- products -->
         <div class="row">
-            <div class="col-md-12 d-flex flex-row justify-content-around">
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="{{ asset('images/microsoft_surface.png') }}" class="card-img-top" alt="product">
-                        <div class="card-body">
-                          <h5 class="card-title">Microsoft Surface</h5>
-                          <div>
-                              <span>Rating:</span>&nbsp;
-                              <span><i class="fas fa-star"></i></span>
-                              <span><i class="fas fa-star"></i></span>
-                              <span><i class="fas fa-star"></i></span>
-                              <span><i class="fas fa-star"></i></span>
-                              <span><i class="fas fa-star"></i></span>
-                          </div>
-                          <p>Price: 350$</p>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                          <a href="#" class="btn btn-warning w-100">Add to cart</a>
+            <div class="col-md-12 d-flex justify-content-around">
+                <div class="row">
+                    @foreach ($products as $product)
+                        <div class="col-md-3 mb-4">
+                            <div class="card px-2">
+                                <img src="{{ asset('images/'.$product->image) }}" class="card-img-top" alt="product">
+                                <div class="card-body">
+                                <h5 class="card-title">{{ $product->name }}</h5>
+                                <div>
+                                    <span>Rating:</span>&nbsp;
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                </div>
+                                <p>Price: {{ $product->price }}$</p>
+                                <a href="#" class="btn btn-warning w-100">Add to cart</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="{{ asset('images/microsoft_surface.png') }}" class="card-img-top" alt="product">
-                        <div class="card-body">
-                          <h5 class="card-title">Microsoft Surface</h5>
-                          <div>
-                              <span>Rating:</span>&nbsp;
-                              <span><i class="fas fa-star"></i></span>
-                              <span><i class="fas fa-star"></i></span>
-                              <span><i class="fas fa-star"></i></span>
-                              <span><i class="fas fa-star"></i></span>
-                              <span><i class="fas fa-star"></i></span>
-                          </div>
-                          <p>Price: 350$</p>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                          <a href="#" class="btn btn-warning w-100">Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="{{ asset('images/microsoft_surface.png') }}" class="card-img-top" alt="product">
-                        <div class="card-body">
-                          <h5 class="card-title">Microsoft Surface</h5>
-                          <div>
-                              <span>Rating:</span>&nbsp;
-                              <span><i class="fas fa-star"></i></span>
-                              <span><i class="fas fa-star"></i></span>
-                              <span><i class="fas fa-star"></i></span>
-                              <span><i class="fas fa-star"></i></span>
-                              <span><i class="fas fa-star"></i></span>
-                          </div>
-                          <p>Price: 350$</p>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                          <a href="#" class="btn btn-warning w-100">Add to cart</a>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
