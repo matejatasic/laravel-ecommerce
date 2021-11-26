@@ -21,7 +21,8 @@ class CreateProductsTable extends Migration
             $table->string('details');
             $table->text('description');
             $table->integer('price');
-            $table->boolean('featured')->default('false');
+            $table->boolean('featured')->default(false);
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
