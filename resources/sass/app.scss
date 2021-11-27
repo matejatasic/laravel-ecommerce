@@ -64,3 +64,38 @@ footer {
         margin-bottom: 0rem;
     }
 }
+
+#adress-bar {
+    background: rgb(189, 183, 183);
+}
+
+#sidebar {
+    ul {
+        li {
+            margin-bottom: 0.3rem;
+
+            a {
+                color: rgb(99, 98, 98);
+                text-decoration: none;
+
+                &:hover {
+                    color: rgb(167, 164, 164);
+                }
+            }
+        }
+    }
+}
+
+#price {
+    font-size: 1.5rem;
+}
+
+.product-title {
+    color: rgb(73, 73, 73);
+    transition: 0.5s;
+
+    &:hover {
+        text-decoration: none;
+        color: rgb(153, 152, 152);
+    }
+}
