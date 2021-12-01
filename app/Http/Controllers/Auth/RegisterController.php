@@ -34,7 +34,7 @@ class RegisterController extends Controller
         if(Auth::user()->isAdmin()) {
             return '/admin/dashboard';
         }
-        else if(Auth::user()->isUser()) {
+        else {
             return '/';
         }
     }
