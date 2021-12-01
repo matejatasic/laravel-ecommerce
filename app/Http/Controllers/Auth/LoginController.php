@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Models\Cart;
+use Session;
 
 class LoginController extends Controller
 {
@@ -31,7 +34,7 @@ class LoginController extends Controller
         if(Auth::user()->isAdmin()) {
             return '/admin/dashboard';
         }
-        else if(Auth::user()->isUser()) {
+        else {
             return '/';
         }
     }
@@ -44,5 +47,41 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function authenticated(Request $request, $user) {
+        $cart = Cart::where('user_id', Auth::id())->get();
+        $userCart = [];
+
+        if($cart->count() > 1) {
+            foreach($cart as $cartItem) {
+                $cartProduct = $cartItem->product;
+                $userCart[$cartProduct->id] = [
+                    "name" => $cartProduct->name,
+                    "quantity" => $cartProduct->quantity,
+                    "price" => $cartProduct->price,
+                    "image" => $cartProduct->image,
+                ];
+            }
+        }
+        else if($cart->count() === 1) {
+            $cartProduct = $cart[0]->product;
+            $userCart[$cartProduct->id] = [
+                "name" => $cartProduct->name,
+                "quantity" => $cartProduct->quantity,
+                "price" => $cartProduct->price,
+                "image" => $cartProduct->image,    
+            ];
+        }
+        
+        Session::put('cart', $userCart);
+    }
+
+    public function getLogout() {
+        Auth::logout();
+
+        Session::forget('cart');
+
+        return redirect('/');
     }
 }
