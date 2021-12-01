@@ -44,9 +44,9 @@
                     @foreach ($products as $product)
                         <div class="col-md-3 mb-4">
                             <div class="card px-2">
-                                <img src="{{ asset('images/'.$product->image) }}" class="card-img-top" alt="product">
+                                <a href="{{ route('products.show', $product->id) }}"><img src="{{ asset('images/'.$product->image) }}" class="card-img-top" alt="product"></a>
                                 <div class="card-body">
-                                <h5 class="card-title">{{ $product->name }}</h5>
+                                <a href="{{ route('products.show', $product->id) }}" class="product-title"><h5 class="card-title">{{ $product->name }}</h5></a>
                                 <div>
                                     <span>Rating:</span>&nbsp;
                                     <span><i class="fas fa-star"></i></span>
@@ -56,7 +56,11 @@
                                     <span><i class="fas fa-star"></i></span>
                                 </div>
                                 <p>Price: {{ $product->price }}$</p>
-                                <a href="#" class="btn btn-warning w-100">Add to cart</a>
+                                @if (array_key_exists($product->id, session()->get('cart')))
+                                    <button class="btn btn-warning w-100" disabled>Added</button>   
+                                @else
+                                    <button class="btn btn-warning w-100 addBtn"id="{{ $product->id }}">Add to cart</button>    
+                                @endif
                                 </div>
                             </div>
                         </div>
@@ -119,4 +123,41 @@
           </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $('.addBtn').click((e) => {
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+
+            let button = $(e.target);
+            let id = button[0].id;
+            let token = "{{ csrf_token() }}";
+
+            $.ajax({
+                url: '/cart/' + id,
+                method: 'POST',
+                data: {
+                    '_token': token,
+                },
+                beforeSend() {
+                    button.prop('disabled', true);
+                    button.text('Adding...');
+                },
+                success: (res) => {
+                    button.text('Added');
+                },
+                error: (request, status, error) => {
+                    button.prop('disabled', false);
+                    button.text('Add to cart');
+                    $('#errors').html(`
+                        <div class="alert alert danger">There was an error while trying to add the item to the cart</div>    
+                    `);
+                    console.log(request.responseText);
+                }
+            });
+        })
+    </script>
 @endsection
