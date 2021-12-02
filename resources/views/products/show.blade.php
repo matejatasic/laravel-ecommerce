@@ -33,7 +33,7 @@
                 </div>
                 <p id="price">{{ $product->price }}$</p>
                 <p class="card-text">{{ $product->description }}</p>
-                @if (array_key_exists($product->id, session()->get('cart')))
+                @if (Session::has('cart') && array_key_exists($product->id, session()->get('cart')))
                     <button class="btn btn-warning w-100" disabled>Added</button>   
                 @else
                     <button class="btn btn-warning w-100 addBtn"id="{{ $product->id }}">Add to cart</button>    
