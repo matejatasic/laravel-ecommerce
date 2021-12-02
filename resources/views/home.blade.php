@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+    @if ($errors->any())
+        <div id="errors">
+            @foreach ($errors->all() as $error)
+                <div class="alert alert danger">{{$error}}</div>
+            @endforeach
+        </div>
+    @endif
     <!-- hero -->
     <div id="hero-container">
         <div id="block-text">
@@ -56,7 +63,7 @@
                                     <span><i class="fas fa-star"></i></span>
                                 </div>
                                 <p>Price: {{ $product->price }}$</p>
-                                @if (array_key_exists($product->id, session()->get('cart')))
+                                @if (Session::has('cart') && array_key_exists($product->id, session()->get('cart')))
                                     <button class="btn btn-warning w-100" disabled>Added</button>   
                                 @else
                                     <button class="btn btn-warning w-100 addBtn"id="{{ $product->id }}">Add to cart</button>    
