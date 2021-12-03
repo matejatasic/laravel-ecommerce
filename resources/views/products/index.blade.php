@@ -9,13 +9,6 @@
     </div>
     <div class="container">
         <div class="row">
-            @if ($errors->any())
-                <div id="errors">
-                    @foreach ($errors->all() as $error)
-                        <div class="alert alert danger">{{$error}}</div>
-                    @endforeach
-                </div>
-            @endif
             <!-- sidebar -->
             <div class="col-md-3" id="sidebar">
                 <div class="row">
@@ -42,6 +35,13 @@
             <!-- !sidebar -->
             <div class="col-md-9">
                 <h1>Shop</h1>
+                <div id="errors">
+                    @if ($errors->any())
+                            @foreach ($errors->all() as $error)
+                                <div class="alert alert danger">{{$error}}</div>
+                            @endforeach
+                    @endif
+                </div>
                 <div class="row mt-4 d-flex flex-row justify-content-between">
                     @foreach ($products as $product)
                         <div class="col-md-4 mb-4">
@@ -95,13 +95,22 @@
                     button.text('Adding...');
                 },
                 success: (res) => {
-                    button.text('Added');
+                    if(res === 0) {
+                        $('#errors').html(`
+                            <div class="alert alert-danger">You must be logged in to add to the cart!</div>    
+                        `);   
+                        button.prop('disabled', false);
+                        button.text('Add to cart');
+                    }
+                    else {
+                        button.text('Added');
+                    }
                 },
                 error: (request, status, error) => {
                     button.prop('disabled', false);
                     button.text('Add to cart');
                     $('#errors').html(`
-                        <div class="alert alert danger">There was an error while trying to add the item to the cart</div>    
+                        <div class="alert alert danger">There was an error while trying to add the item to the cart!</div>    
                     `);
                     console.log(request.responseText);
                 }
