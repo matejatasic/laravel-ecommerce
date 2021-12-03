@@ -8,14 +8,14 @@
         <div class="col-md-8"></div>
     </div>
     <div class="container">
-        <div class="row">
+        <div id="errors">
             @if ($errors->any())
-                <div id="errors">
                     @foreach ($errors->all() as $error)
                         <div class="alert alert danger">{{$error}}</div>
                     @endforeach
-                </div>
             @endif
+        </div>
+        <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-5">
                 <img src="{{ asset('images/'.$product->image) }}" class="card-img-top" alt="product">
@@ -65,13 +65,22 @@
                     button.text('Adding...');
                 },
                 success: (res) => {
-                    button.text('Added');
+                    if(res === 0) {
+                        $('#errors').html(`
+                            <div class="alert alert-danger">You must be logged in to add to the cart!</div>    
+                        `);   
+                        button.prop('disabled', false);
+                        button.text('Add to cart');
+                    }
+                    else {
+                        button.text('Added');
+                    }
                 },
                 error: (request, status, error) => {
                     button.prop('disabled', false);
                     button.text('Add to cart');
                     $('#errors').html(`
-                        <div class="alert alert danger">There was an error while trying to add the item to the cart</div>    
+                        <div class="alert alert danger">There was an error while trying to add the item to the cart!</div>    
                     `);
                     console.log(request.responseText);
                 }
