@@ -1,13 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @if ($errors->any())
-        <div id="errors">
-            @foreach ($errors->all() as $error)
-                <div class="alert alert danger">{{$error}}</div>
-            @endforeach
-        </div>
-    @endif
     <!-- hero -->
     <div id="hero-container">
         <div id="block-text">
@@ -46,6 +39,13 @@
 
         <!-- products -->
         <div class="row">
+            <div class="col-md-12" id="errors">
+                @if ($errors->any())
+                        @foreach ($errors->all() as $error)
+                            <div class="alert alert danger">{{$error}}</div>
+                        @endforeach
+                @endif
+            </div>
             <div class="col-md-12 d-flex justify-content-around">
                 <div class="row">
                     @foreach ($products as $product)
@@ -154,13 +154,22 @@
                     button.text('Adding...');
                 },
                 success: (res) => {
-                    button.text('Added');
+                    if(res === 0) {
+                        $('#errors').html(`
+                            <div class="alert alert-danger">You must be logged in to add to the cart!</div>    
+                        `);   
+                        button.prop('disabled', false);
+                        button.text('Add to cart');
+                    }
+                    else {
+                        button.text('Added');
+                    }
                 },
                 error: (request, status, error) => {
                     button.prop('disabled', false);
                     button.text('Add to cart');
                     $('#errors').html(`
-                        <div class="alert alert danger">There was an error while trying to add the item to the cart</div>    
+                        <div class="alert alert danger">There was an error while trying to add the item to the cart!</div>    
                     `);
                     console.log(request.responseText);
                 }
