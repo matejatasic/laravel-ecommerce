@@ -9,7 +9,25 @@ use App\Models\Cart;
 
 class CartController extends Controller
 {
+    public function index() {
+        $cart = Cart::where('user_id', Auth::id())->get();
+        $subtotal = 0;
+        foreach($cart as $cartProduct) {
+            $subtotal += $cartProduct->product->price;
+        }
+        $tax = $subtotal / 10;
+
+        return view('cart.index', [
+            'cart' => $cart,
+            'subtotal' => $subtotal,
+            'tax' => $tax,
+        ]);
+    }
+
     public function store($id) {
+        if(!Auth::check()) {
+            return response()->json(0, 200);    
+        }
         $product = Product::find($id);
         
         $cart = new Cart;
@@ -23,12 +41,13 @@ class CartController extends Controller
             $id => [
                 "name" => $product->name,
                 "quantity" => 1,
+                'details' => $product->details,
                 "price" => $product->price,
                 "image" => $product->image,
             ],
         ];
         session()->put('cart', $userCart);
         
-        return response()->json('OK', 200);
+        return response()->json(1, 200);
     }
 }
