@@ -13,7 +13,7 @@ class CartController extends Controller
         $cart = Cart::where('user_id', Auth::id())->get();
         $subtotal = 0;
         foreach($cart as $cartProduct) {
-            $subtotal += $cartProduct->product->price;
+            $subtotal += $cartProduct->product->price * $cartProduct->quantity;
         }
         $tax = $subtotal / 10;
 
@@ -37,17 +37,34 @@ class CartController extends Controller
         $cart->save();
 
         $userCart = session()->get('cart');
-        $userCart = [
-            $id => [
-                "name" => $product->name,
-                "quantity" => 1,
-                'details' => $product->details,
-                "price" => $product->price,
-                "image" => $product->image,
-            ],
+        $userCart[$id] = [
+            "name" => $product->name,
+            "quantity" => 1,
+            'details' => $product->details,
+            "price" => $product->price,
+            "image" => $product->image,
         ];
         session()->put('cart', $userCart);
         
+        return response()->json(count($userCart), 200);
+    }
+
+    public function update(Request $request, $id) {
+        $cart = Cart::find($id);
+        $cart->quantity = $request->quantity;
+        $cart->save();
+
+        return response()->json(1, 200);
+    }
+
+    public function delete($id) {
+        $cart = Cart::find($id);
+        $userCart =  session()->get('cart');
+
+        unset($userCart[$cart->product_id]);
+        session()->put('cart', $userCart); 
+        $cart->delete();
+
         return response()->json(1, 200);
     }
 }
