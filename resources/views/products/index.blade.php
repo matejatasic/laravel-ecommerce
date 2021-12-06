@@ -106,7 +106,6 @@
                             button.text('Add to cart');
                         }
                         else {
-                            console.log(res);
                             cartQuantity.text(res);
                             button.text('Added');
                         }
