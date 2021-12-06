@@ -22,3 +22,5 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.ind
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/{id}', [CartController::class, 'store'])->name('cart.store');
+Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/{id}', [CartController::class, 'delete'])->name('cart.delete');
