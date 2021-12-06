@@ -46,45 +46,50 @@
 @section('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
-        $('.addBtn').click((e) => {
-            e.stopPropagation();
-            e.stopImmediatePropagation();
+        $(document).ready(() => {
+            let cartQuantity = $('#cart-quantity');
 
-            let button = $(e.target);
-            let id = button[0].id;
-            let token = "{{ csrf_token() }}";
+            $('.addBtn').click((e) => {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
 
-            $.ajax({
-                url: '/cart/' + id,
-                method: 'POST',
-                data: {
-                    '_token': token,
-                },
-                beforeSend() {
-                    button.prop('disabled', true);
-                    button.text('Adding...');
-                },
-                success: (res) => {
-                    if(res === 0) {
-                        $('#errors').html(`
-                            <div class="alert alert-danger">You must be logged in to add to the cart!</div>    
-                        `);   
+                let button = $(e.target);
+                let id = button[0].id;
+                let token = "{{ csrf_token() }}";
+
+                $.ajax({
+                    url: '/cart/' + id,
+                    method: 'POST',
+                    data: {
+                        '_token': token,
+                    },
+                    beforeSend() {
+                        button.prop('disabled', true);
+                        button.text('Adding...');
+                    },
+                    success: (res) => {
+                        if(res === 0) {
+                            $('#errors').html(`
+                                <div class="alert alert-danger">You must be logged in to add to the cart!</div>    
+                            `);   
+                            button.prop('disabled', false);
+                            button.text('Add to cart');
+                        }
+                        else {
+                            cartQuantity.text(res);
+                            button.text('Added');
+                        }
+                    },
+                    error: (request, status, error) => {
                         button.prop('disabled', false);
                         button.text('Add to cart');
+                        $('#errors').html(`
+                            <div class="alert alert danger">There was an error while trying to add the item to the cart!</div>    
+                        `);
+                        console.log(request.responseText);
                     }
-                    else {
-                        button.text('Added');
-                    }
-                },
-                error: (request, status, error) => {
-                    button.prop('disabled', false);
-                    button.text('Add to cart');
-                    $('#errors').html(`
-                        <div class="alert alert danger">There was an error while trying to add the item to the cart!</div>    
-                    `);
-                    console.log(request.responseText);
-                }
+                });
             });
-        })
+        });
     </script>
 @endsection
