@@ -29,17 +29,17 @@
                             </div>
                             <div class="col-md-2 d-flex flex-column justify-content-around">
                                 <button class="btn btn-success w-75">Save for later</button>
-                                <button class="btn btn-danger w-75">Remove</button>
+                                <button class="{{ $cartProduct->id }} btn btn-danger w-75 removeBtn">Remove</button>
                             </div>
                             <div class="col-md-1 pr-2 d-flex">
-                                <select name="quantity" id="{{ $cartProduct->product_id }}" class="form-control align-self-center">
+                                <select name="quantity" id="{{ $cartProduct->id }}" class="form-control align-self-center quantitySelect">
                                     @for ($i = 1; $i <= $cartProduct->product->quantity; $i++)
-                                    <option value="{{ $i }}">{{ $i }}</option>
+                                        <option {{ $cartProduct->quantity === $i ? 'selected' : '' }} value="{{ $i }}">{{ $i }}</option>
                                     @endfor
                                 </select>
                             </div>
                             <div class="col-md-2 d-flex justify-content-center">
-                                <p class="align-self-center cartPrice">{{ $cartProduct->product->price }}$</p>
+                                <p class="align-self-center cartPrice {{ $cartProduct->product_id }}">{{ $cartProduct->product->price * $cartProduct->quantity }}$</p>
                             </div>
                         </div>
                     </div>
@@ -63,4 +63,58 @@
                 <a href="#" class="btn btn-success">Proceed to Checkout</a>
             </div>
         </div>
+@endsection
+
+@section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(() => {
+            let token = "{{ csrf_token() }}";
+
+            $('.quantitySelect').change((e) => {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+
+                let select = $(e.target).find(':selected');
+                let id = $(e.target)[0].id;
+                let quantity = select.val();
+                $.ajax({
+                    url: `/cart/${id}`,
+                    method: 'PUT',
+                    data: {
+                        '_token': token,
+                        'quantity': quantity,
+                    },
+                    success: (res) => {
+                        window.location.href = "{{ route('cart.index') }}";
+                    },
+                    error: (request, status, error) => {
+                        console.log(request.responseText);
+                    }
+                })
+            });
+
+            $('.removeBtn').click((e) => {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+
+                let button = $(e.target);
+                let id = button.attr('class').split(' ')[0];
+                
+                $.ajax({
+                    url: '/cart/' + id,
+                    method: 'DELETE',
+                    data: {
+                        '_token': token,
+                    },
+                    success: (res) => {
+                        window.location.href = "{{ route('cart.index') }}";
+                    },
+                    error: (request, status, error) => {
+                        console.log(request.responseText);
+                    }
+                })
+            });
+        });
+    </script>
 @endsection
