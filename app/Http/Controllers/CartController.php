@@ -6,11 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\SaveForLater;
+use Session;
 
 class CartController extends Controller
 {
     public function index() {
         $cart = Cart::where('user_id', Auth::id())->get();
+        $saveForLater = SaveForLater::where('user_id', Auth::id())->get();
         $subtotal = 0;
         foreach($cart as $cartProduct) {
             $subtotal += $cartProduct->product->price * $cartProduct->quantity;
@@ -19,6 +22,7 @@ class CartController extends Controller
 
         return view('cart.index', [
             'cart' => $cart,
+            'saveForLater' => $saveForLater,
             'subtotal' => $subtotal,
             'tax' => $tax,
         ]);
@@ -65,6 +69,24 @@ class CartController extends Controller
         session()->put('cart', $userCart); 
         $cart->delete();
 
-        return response()->json(1, 200);
+        Session::flash('success', 'Successfully deleted the product from the cart!');
+        return redirect()->route('cart.index');
+    }
+
+    public function saveForLater($id) {
+        $cartProduct = Cart::find($id);
+        $saveForLater = new SaveForLater;
+        $userCart =  session()->get('cart');
+
+        $saveForLater->product_id = $cartProduct->product_id;
+        $saveForLater->user_id = Auth::id();
+        $saveForLater->save();
+
+        unset($userCart[$cartProduct->product_id]);
+        session()->put('cart', $userCart); 
+        $cartProduct->delete();
+
+        Session::flush('success', 'Item successfully saved for later!');
+        return redirect()->route('cart.index');
     }
 }
