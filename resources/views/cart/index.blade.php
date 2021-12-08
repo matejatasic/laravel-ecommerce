@@ -37,6 +37,7 @@
                             <div class="col-md-2 d-flex flex-column justify-content-around">
                                 <form action="{{ route('cart.saveForLater', $cartProduct->id) }}" method="POST">
                                     @csrf
+
                                     <input class="btn btn-success w-75" type="submit" value="Save for later">
                                 </form>
                                 <form action="{{ route('cart.delete', $cartProduct->id) }}" method="POST">
@@ -99,8 +100,9 @@
                                         </div>
                                     </div>
                                     <div class="col-md-2 d-flex flex-column justify-content-around">
-                                        <form action="{{ route('cart.saveForLater', $savedItem->id) }}" method="POST">
+                                        <form action="{{ route('cart.moveToCart', $savedItem->id) }}" method="POST">
                                             @csrf
+
                                             <input class="btn btn-success w-75" type="submit" value="Move to cart">
                                         </form>
                                         <form action="{{ route('cart.delete', $savedItem->id) }}" method="POST">
