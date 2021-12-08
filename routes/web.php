@@ -25,3 +25,4 @@ Route::post('/cart/{id}', [CartController::class, 'store'])->name('cart.store');
 Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/{id}', [CartController::class, 'delete'])->name('cart.delete');
 Route::post('/cart/save/{id}', [CartController::class, 'saveForLater'])->name('cart.saveForLater');
+Route::post('/cart/add/{id}', [CartController::class, 'moveToCart'])->name('cart.moveToCart');
