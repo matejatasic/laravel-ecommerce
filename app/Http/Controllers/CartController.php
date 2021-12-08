@@ -63,13 +63,22 @@ class CartController extends Controller
 
     public function delete($id) {
         $cart = Cart::find($id);
-        $userCart =  session()->get('cart');
+        $saveForLater = SaveForLater::find($id);
 
-        unset($userCart[$cart->product_id]);
-        session()->put('cart', $userCart); 
-        $cart->delete();
+        if($cart !== null) {
+            $userCart =  session()->get('cart');
+            unset($userCart[$cart->product_id]);
+            session()->put('cart', $userCart); 
+            $cart->delete();
 
-        Session::flash('success', 'Successfully deleted the product from the cart!');
+            Session::flash('success', 'Successfully removed the product from the cart!');
+        }
+        else {
+            $saveForLater->delete();
+
+            Session::flash('success', 'Successfully removed the product from save for later!');
+        }
+
         return redirect()->route('cart.index');
     }
 
@@ -81,12 +90,35 @@ class CartController extends Controller
         $saveForLater->product_id = $cartProduct->product_id;
         $saveForLater->user_id = Auth::id();
         $saveForLater->save();
-
+        
         unset($userCart[$cartProduct->product_id]);
         session()->put('cart', $userCart); 
         $cartProduct->delete();
 
-        Session::flush('success', 'Item successfully saved for later!');
+        Session::flash('success', 'Item successfully saved for later!');
+        return redirect()->route('cart.index');
+    }
+    
+    public function moveToCart($id) {
+        $saveForLater = SaveForLater::find($id);
+        $cart = new Cart;
+        $userCart =  session()->get('cart');
+
+        $cart->product_id = $saveForLater->product_id;
+        $cart->user_id = Auth::id();
+        $cart->save();
+        
+        $userCart[$cart->product_id] = [
+            "name" => $cart->product->name,
+            "quantity" => 1,
+            'details' => $cart->product->details,
+            "price" => $cart->product->price,
+            "image" => $cart->product->image,    
+        ];
+        session()->put('cart', $userCart); 
+        $saveForLater->delete();
+
+        Session::flash('success', 'Item successfully moved to the cart!');
         return redirect()->route('cart.index');
     }
 }
