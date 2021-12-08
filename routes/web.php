@@ -24,3 +24,4 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/{id}', [CartController::class, 'store'])->name('cart.store');
 Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/{id}', [CartController::class, 'delete'])->name('cart.delete');
+Route::post('/cart/save/{id}', [CartController::class, 'saveForLater'])->name('cart.saveForLater');
