@@ -13,8 +13,15 @@
                 <h1>{{ count($cart) }} item(s) in the cart</h1>
             </div>
             <div class="col-md-10 mt-3" id="cart">
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert danger">{{$error}}</div>
+                    @endforeach
+                @endif
+                @if (Session::has('success'))
+                    <div class="alert alert-success">{{ Session::get('success') }}</div>
+                @endif
                 @foreach ($cart as $cartProduct)
-                    
                     <div class="card mb-3">
                         <div class="row no-gutters">
                             <div class="col-md-2">
@@ -28,8 +35,16 @@
                                 </div>
                             </div>
                             <div class="col-md-2 d-flex flex-column justify-content-around">
-                                <button class="btn btn-success w-75">Save for later</button>
-                                <button class="{{ $cartProduct->id }} btn btn-danger w-75 removeBtn">Remove</button>
+                                <form action="{{ route('cart.saveForLater', $cartProduct->id) }}" method="POST">
+                                    @csrf
+                                    <input class="btn btn-success w-75" type="submit" value="Save for later">
+                                </form>
+                                <form action="{{ route('cart.delete', $cartProduct->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <input class="btn btn-danger w-75" type="submit" value="Remove">
+                                </form>
                             </div>
                             <div class="col-md-1 pr-2 d-flex">
                                 <select name="quantity" id="{{ $cartProduct->id }}" class="form-control align-self-center quantitySelect">
@@ -60,8 +75,49 @@
             </div>
             <div class="col-md-10 mb-5 d-flex justify-content-between">
                 <a href="{{ route('products.index') }}" class="btn btn-dark">Continue Shopping</a>
-                <a href="#" class="btn btn-success">Proceed to Checkout</a>
+                <a href="#" class="btn btn-primary">Proceed to Checkout</a>
             </div>
+            
+            @if (count($saveForLater) === 0)
+                <p>No products have been saved for later</p>
+            @else
+                <div class="col-md-12">
+                    <h2>{{ count($saveForLater) }} item(s) saved for later</h2>
+                </div>
+                <div class="col-md-10 mt-3 mb-4" id="savedItems">
+                    @foreach ($saveForLater as $savedItem)
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-2">
+                                        <img src="{{ asset('images/'.$savedItem->product->image) }}" alt="product">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $savedItem->product->name }}</h5>
+                                            <p class="card-text">{{ $savedItem->product->details }}</p>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 d-flex flex-column justify-content-around">
+                                        <form action="{{ route('cart.saveForLater', $savedItem->id) }}" method="POST">
+                                            @csrf
+                                            <input class="btn btn-success w-75" type="submit" value="Move to cart">
+                                        </form>
+                                        <form action="{{ route('cart.delete', $savedItem->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <input class="btn btn-danger w-75" type="submit" value="Remove">
+                                        </form>
+                                    </div>
+                                    <div class="col-md-3 d-flex justify-content-center">
+                                        <p class="align-self-center cartPrice {{ $savedItem->product_id }}">{{ $savedItem->product->price }}$</p>
+                                    </div>
+                                </div>
+                            </div>
+                    @endforeach
+                </div>
+            @endif
         </div>
 @endsection
 
@@ -84,28 +140,6 @@
                     data: {
                         '_token': token,
                         'quantity': quantity,
-                    },
-                    success: (res) => {
-                        window.location.href = "{{ route('cart.index') }}";
-                    },
-                    error: (request, status, error) => {
-                        console.log(request.responseText);
-                    }
-                })
-            });
-
-            $('.removeBtn').click((e) => {
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-
-                let button = $(e.target);
-                let id = button.attr('class').split(' ')[0];
-                
-                $.ajax({
-                    url: '/cart/' + id,
-                    method: 'DELETE',
-                    data: {
-                        '_token': token,
                     },
                     success: (res) => {
                         window.location.href = "{{ route('cart.index') }}";
