@@ -37,9 +37,9 @@
                 <h1>Shop</h1>
                 <div id="errors">
                     @if ($errors->any())
-                            @foreach ($errors->all() as $error)
-                                <div class="alert alert danger">{{$error}}</div>
-                            @endforeach
+                        @foreach ($errors->all() as $error)
+                            <div class="alert alert danger">{{$error}}</div>
+                        @endforeach
                     @endif
                 </div>
                 <div class="row mt-4 d-flex flex-row justify-content-between">
@@ -60,6 +60,8 @@
                                 <p>Price: {{ $product->price }}$</p>
                                 @if (Session::has('cart') && array_key_exists($product->id, session()->get('cart')))
                                     <button class="btn btn-warning w-100" disabled>Added</button>   
+                                @elseif(array_key_exists($product->id, $productQuantity) && $productQuantity[$product->id] === $product->quantity)
+                                    <button class="btn btn-warning w-100" disabled>Out of stock</button>  
                                 @else
                                     <button class="btn btn-warning w-100 addBtn" id="{{ $product->id }}">Add to cart</button>    
                                 @endif
@@ -98,12 +100,19 @@
                         button.text('Adding...');
                     },
                     success: (res) => {
-                        if(res === 0) {
+                        if(res === 'already_in_cart') {
                             $('#errors').html(`
                                 <div class="alert alert-danger">You must be logged in to add to the cart!</div>    
                             `);   
                             button.prop('disabled', false);
                             button.text('Add to cart');
+                        }
+                        else if(res === 'out_of_stock') {
+                            $('#errors').html(`
+                                <div class="alert alert-danger">There are not enough items in the stock!</div>    
+                            `);   
+                            button.prop('disabled', false);
+                            button.text('Add to cart');    
                         }
                         else {
                             cartQuantity.text(res);
@@ -114,7 +123,7 @@
                         button.prop('disabled', false);
                         button.text('Add to cart');
                         $('#errors').html(`
-                            <div class="alert alert danger">There was an error while trying to add the item to the cart!</div>    
+                            <div class="alert alert-danger">There was an error while trying to add the item to the cart!</div>    
                         `);
                         console.log(request.responseText);
                     }
