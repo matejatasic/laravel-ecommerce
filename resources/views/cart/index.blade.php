@@ -13,11 +13,13 @@
                 <h1>{{ count($cart) }} item(s) in the cart</h1>
             </div>
             <div class="col-md-10 mt-3" id="cart">
-                @if ($errors->any())
-                    @foreach ($errors->all() as $error)
-                        <div class="alert alert danger">{{$error}}</div>
-                    @endforeach
-                @endif
+                <div id="errors">
+                    @if ($errors->any())
+                        @foreach ($errors->all() as $error)
+                            <div class="alert alert danger">{{$error}}</div>
+                        @endforeach
+                    @endif
+                </div>
                 @if (Session::has('success'))
                     <div class="alert alert-success">{{ Session::get('success') }}</div>
                 @endif
@@ -133,7 +135,7 @@
                 e.stopImmediatePropagation();
 
                 let select = $(e.target).find(':selected');
-                let id = $(e.target)[0].id;
+                let id = $(e.target)[0].id;;
                 let quantity = select.val();
                 $.ajax({
                     url: `/cart/${id}`,
@@ -143,7 +145,21 @@
                         'quantity': quantity,
                     },
                     success: (res) => {
-                        window.location.href = "{{ route('cart.index') }}";
+                        if(res === 'ok') {
+                            window.location.href = "{{ route('cart.index') }}";     
+                        }
+                        else {
+                            if(res === 0) {
+                                $('#errors').html(`
+                                    <div class="alert alert-danger">There are not enough items in the stock! There are no left!</div>    
+                                `);
+                            }
+                            else {
+                                $('#errors').html(`
+                                    <div class="alert alert-danger">There are not enough items in the stock! Only ${res} left!</div>    
+                                `);
+                            }
+                        }
                     },
                     error: (request, status, error) => {
                         console.log(request.responseText);
