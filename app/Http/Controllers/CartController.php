@@ -68,10 +68,21 @@ class CartController extends Controller
 
     public function update(Request $request, $id) {
         $cart = Cart::find($id);
+        $qty = 0;
+        $productCart = Cart::where('product_id', $cart->product_id)->get();
+
+        foreach($productCart as $cartProduct) {
+            $qty += $cartProduct['quantity'];
+        }
+
+        if(($qty + $request->quantity) > $cart->product->quantity) {
+            return response()->json($cart->product->quantity - $qty, 200);     
+        }
+
         $cart->quantity = $request->quantity;
         $cart->save();
 
-        return response()->json(1, 200);
+        return response()->json('ok', 200);
     }
 
     public function delete($id) {
