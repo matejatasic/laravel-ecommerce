@@ -25,13 +25,12 @@
                     <div class="card mb-3">
                         <div class="row no-gutters">
                             <div class="col-md-2">
-                                <img src="{{ asset('images/'.$cartProduct->product->image) }}" alt="product">
+                                <a href="{{ route('products.show', $cartProduct->product_id) }}"><img src="{{ asset('images/'.$cartProduct->product->image) }}" alt="product"></a>
                             </div>
                             <div class="col-md-5">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ $cartProduct->product->name }}</h5>
+                                    <a href="{{ route('products.show', $cartProduct->product_id) }}"><h5 class="card-title">{{ $cartProduct->product->name }}</h5></a>
                                     <p class="card-text">{{ $cartProduct->product->details }}</p>
-                                    
                                 </div>
                             </div>
                             <div class="col-md-2 d-flex flex-column justify-content-around">
@@ -90,11 +89,11 @@
                             <div class="card mb-3">
                                 <div class="row no-gutters">
                                     <div class="col-md-2">
-                                        <img src="{{ asset('images/'.$savedItem->product->image) }}" alt="product">
+                                        <a href="{{ route('products.show', $savedItem->product_id) }}"><img src="{{ asset('images/'.$savedItem->product->image) }}" alt="product"></a>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="card-body">
-                                            <h5 class="card-title">{{ $savedItem->product->name }}</h5>
+                                            <a href="{{ route('products.show', $savedItem->product_id) }}"><h5 class="card-title">{{ $savedItem->product->name }}</h5></a>
                                             <p class="card-text">{{ $savedItem->product->details }}</p>
                                             
                                         </div>
