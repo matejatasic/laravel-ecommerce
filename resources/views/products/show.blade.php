@@ -34,7 +34,9 @@
                 <p id="price">{{ $product->price }}$</p>
                 <p class="card-text">{{ $product->description }}</p>
                 @if (Session::has('cart') && array_key_exists($product->id, session()->get('cart')))
-                    <button class="btn btn-warning w-100" disabled>Added</button>   
+                    <button class="btn btn-warning w-100" disabled>Added</button>
+                @elseif($productQuantity === $product->quantity)
+                    <button class="btn btn-warning w-100" disabled>Out of stock</button>    
                 @else
                     <button class="btn btn-warning w-100 addBtn"id="{{ $product->id }}">Add to cart</button>    
                 @endif
