@@ -18,8 +18,10 @@ class CartController extends Controller
         foreach($cart as $cartProduct) {
             $subtotal += $cartProduct->product->price * $cartProduct->quantity;
         }
+        
         $tax = $subtotal / 10;
-
+        $productCart = Cart::all();
+        
         return view('cart.index', [
             'cart' => $cart,
             'saveForLater' => $saveForLater,
@@ -29,10 +31,21 @@ class CartController extends Controller
     }
 
     public function store($id) {
-        if(!Auth::check()) {
-            return response()->json(0, 200);    
+        if(Cart::where('product_id', $id)->where('user_id', Auth::id())->exists()) {
+            return response()->json('already_in_cart', 200);
         }
+        
+        $qty = 0;
         $product = Product::find($id);
+        $cart = Cart::where('product_id', $id)->get();
+        
+        foreach($cart as $cartProduct) {
+            $qty += $cartProduct['quantity'];
+        }
+        
+        if(($product->quantity - $qty) <= 0) {
+            return response()->json('out_of_stock', 200);   
+        }
         
         $cart = new Cart;
 
@@ -65,7 +78,7 @@ class CartController extends Controller
         $cart = Cart::find($id);
         $saveForLater = SaveForLater::find($id);
 
-        if($cart !== null) {
+        if($cart) {
             $userCart =  session()->get('cart');
             unset($userCart[$cart->product_id]);
             session()->put('cart', $userCart); 
@@ -83,6 +96,7 @@ class CartController extends Controller
     }
 
     public function saveForLater($id) {
+        if(SaveForLater::find())
         $cartProduct = Cart::find($id);
         $saveForLater = new SaveForLater;
         $userCart =  session()->get('cart');
