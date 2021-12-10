@@ -107,8 +107,15 @@ class CartController extends Controller
     }
 
     public function saveForLater($id) {
-        if(SaveForLater::find())
         $cartProduct = Cart::find($id);
+
+        if(SaveForLater::where('product_id', $cartProduct->product_id)->where('user_id', Auth::id())->exists()) {
+            $errors = [];
+            $errors['alreadySaved'] = 'This item has already been saved for later!';
+
+            return redirect()->route('cart.index')->withErrors($errors);
+        }
+
         $saveForLater = new SaveForLater;
         $userCart =  session()->get('cart');
 
@@ -126,6 +133,14 @@ class CartController extends Controller
     
     public function moveToCart($id) {
         $saveForLater = SaveForLater::find($id);
+
+        if(Cart::where('product_id', $saveForLater->product_id)->where('user_id', Auth::id())->exists()) {
+            $errors = [];
+            $errors['alreadyInCart'] = 'This item has already been added to the cart!';
+
+            return redirect()->route('cart.index')->withErrors($errors);   
+        }
+
         $cart = new Cart;
         $userCart =  session()->get('cart');
 
