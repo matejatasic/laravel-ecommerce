@@ -11,7 +11,7 @@
         <div id="errors">
             @if ($errors->any())
                     @foreach ($errors->all() as $error)
-                        <div class="alert alert danger">{{$error}}</div>
+                        <div class="alert alert-danger">{{$error}}</div>
                     @endforeach
             @endif
         </div>
@@ -86,7 +86,7 @@
                         button.prop('disabled', false);
                         button.text('Add to cart');
                         $('#errors').html(`
-                            <div class="alert alert danger">There was an error while trying to add the item to the cart!</div>    
+                            <div class="alert alert-danger">There was an error while trying to add the item to the cart!</div>    
                         `);
                         console.log(request.responseText);
                     }
