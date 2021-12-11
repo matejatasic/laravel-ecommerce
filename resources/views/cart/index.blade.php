@@ -77,7 +77,7 @@
             </div>
             <div class="col-md-10 mb-5 d-flex justify-content-between">
                 <a href="{{ route('products.index') }}" class="btn btn-dark">Continue Shopping</a>
-                <a href="#" class="btn btn-primary">Proceed to Checkout</a>
+                <a href="{{ route('checkout.index') }}" class="btn btn-primary">Proceed to Checkout</a>
             </div>
             
             @if (count($saveForLater) === 0)
