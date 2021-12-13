@@ -14,19 +14,13 @@ class CartController extends Controller
     public function index() {
         $cart = Cart::where('user_id', Auth::id())->get();
         $saveForLater = SaveForLater::where('user_id', Auth::id())->get();
-        $subtotal = 0;
-        foreach($cart as $cartProduct) {
-            $subtotal += $cartProduct->product->price * $cartProduct->quantity;
-        }
-        
-        $tax = $subtotal / 10;
-        $productCart = Cart::all();
+        $price = $this->getPrice($cart);
         
         return view('cart.index', [
             'cart' => $cart,
             'saveForLater' => $saveForLater,
-            'subtotal' => $subtotal,
-            'tax' => $tax,
+            'subtotal' => $price['subtotal'],
+            'tax' => $price['tax'],
         ]);
     }
 
