@@ -31,6 +31,6 @@ return [
     ],
     
     'stripe' => [
-        'secret' => 'you stripe key here',
+        'secret' => 'your stripe key here',
     ]
 ];
