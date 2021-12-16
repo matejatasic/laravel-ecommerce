@@ -3,7 +3,7 @@
 @section('content')
     <div class="row mb-5" id="adress-bar">
         <div class="col-md-4 text-center pt-3">
-            <p>Home > Shop</p>
+            <p>Home > Shop > @if ($category_id === 0) All @else {{ $categories[$category_id - 1]->name }} @endif</p>
         </div>
         <div class="col-md-8"></div>
     </div>
@@ -15,11 +15,10 @@
                     <div class="col-md-12">
                         <p><b>Categories</b></p>
                         <ul class="list-unstyled">
-                            <li><a href="#">Laptops</a></li>
-                            <li><a href="#">Mobile Phones</a></li>
-                            <li><a href="#">Tablets</a></li>
-                            <li><a href="#">PCs</a></li>
-                            <li><a href="#">TVs</a></li>
+                            <li><a href="#" class="categoryBtn" id="category-0">All</a></li>
+                            @foreach ($categories as $category)
+                                <li><a href="#" class="categoryBtn" id="category-{{ $category->id }}">{{ $category->name }}</a></li>
+                            @endforeach
                         </ul>
                     </div>
                     <div class="col-md-12">
@@ -131,6 +130,22 @@
                         console.log(request.responseText);
                     }
                 });
+            });
+
+            $('.categoryBtn').click((e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+
+                let button = $(e.target);
+                let id = button[0].id.split('-')[1];
+                
+                if(id === '0') {
+                    window.location.href="/products";
+                }
+                else {
+                    window.location.href=`/products/category/${id}`;
+                }
             });
         })
     </script>
