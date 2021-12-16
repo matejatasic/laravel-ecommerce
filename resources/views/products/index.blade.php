@@ -35,6 +35,9 @@
             <!-- !sidebar -->
             <div class="col-md-9">
                 <h1>Shop</h1>
+                @if (Session::has('success'))
+                    <div class="alert alert-success">{{ Session::get('success') }}</div>
+                @endif
                 <div id="errors">
                     @if ($errors->any())
                         @foreach ($errors->all() as $error)
