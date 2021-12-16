@@ -23,8 +23,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Products
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/category/{id}', [ProductController::class, 'index'])->name('products.category-index');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
-
 
 Route::group(['middleware' => 'auth' ], function() {
     // Cart
