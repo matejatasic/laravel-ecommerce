@@ -12,7 +12,16 @@
                 <hr>
             </div>
             <div class="col-md-6">
+                <div id="errors">
+                    @if ($errors->any())
+                        @foreach ($errors->all() as $error)
+                            <div class="alert alert-danger">{{$error}}</div>
+                        @endforeach
+                    @endif
+                </div>
                 <form action="{{ route('checkout.store') }}" id="payment-form" method="POST">
+                    @csrf
+                    
                     <div class="row">
                         <!-- billing Details -->
                         <div class="col-md-12">
@@ -21,30 +30,30 @@
                         <div class="col-md-12 mt-3">
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="email" class="form-control" name="email" value="{{ auth()->user()->email }}" readonly>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ auth()->user()->email }}" readonly>
                             </div>
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
+                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
                             </div>
                             <div class="form-group">
                                 <label>Address</label>
-                                <input type="text" class="form-control" name="address" value="{{ old('name') }}" required>
+                                <input type="text" class="form-control" id="address" name="address" value="{{ old('name') }}" required>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col">
                                     <label>City</label>
-                                    <input type="text" class="form-control" name="city" value="{{ old('city') }}" required>
+                                    <input type="text" class="form-control" id="city" name="city" value="{{ old('city') }}" required>
                                 </div>
                                 <div class="form-group col">
                                     <label>Province</label>
-                                    <input type="text" class="form-control" name="province" value="{{ old('province') }}" required>
+                                    <input type="text" class="form-control" id="province" name="province" value="{{ old('province') }}" required>
                                 </div>
                             </div>
                             <div class="form-row mb-4">
                                 <div class="form-group col">
                                     <label>Postal Code</label>
-                                    <input type="text" class="form-control" name="postalcode" value="{{ old('postalcode') }}" required>
+                                    <input type="text" class="form-control" id="postalcode" name="postalcode" value="{{ old('postalcode') }}" required>
                                 </div>
                                 <div class="form-group col">
                                     <label>Phone</label>
@@ -61,7 +70,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Name on Card</label>
-                                <input type="text" class="form-control" name="name_on_card" required>    
+                                <input type="text" class="form-control" id="name_on_card" name="name_on_card" required>    
                             </div>
                             <div class="form-group">
                                 <label>Credit or debit card number</label>
@@ -125,7 +134,7 @@
 @section('scripts')
     <script>
         (function(){
-            var stripe = Stripe('pk_test_JKVJPMynL8ckk7ivBxoroTlT');
+            var stripe = Stripe("{{ env('STRIPE_KEY') }}");
      
             var elements = stripe.elements();
             
