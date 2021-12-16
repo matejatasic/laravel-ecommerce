@@ -9,12 +9,25 @@ use App\Models\Cart;
 
 class ProductController extends Controller
 {
-    public function index($category_id = 0) {
-        if($category_id === 0) {
-            $products = Product::orderBy('created_at', 'desc')->paginate(9);
+    public function index() {
+        if(!isset(request()->category)) {
+            $products = Product::with('category')->whereHas('category', function ($query) {
+                $query->where('slug', request()->category);
+            })->get(); 
+        }
+        if(isset(request()->range)) {
+            if(request()->range === '0-700') {
+                $products = Product::where('price', '<=', '700')->get();
+            }
+            else if(request()->range === '700-2500') {
+                $products = Product::where('price', '>=', '700')->where('price', '<=', '2500')->get();
+            }
+            else {
+                $products = Product::where('price', '>=', '2500')->get();
+            }
         }
         else {
-            $products = Product::where('category_id', $category_id)->paginate(9);    
+            $products = Product::orderBy('created_at', 'desc')->paginate(9); 
         }
 
         $cart = Cart::all();
@@ -34,7 +47,6 @@ class ProductController extends Controller
             'products' => $products,
             'productQuantity' => $productQuantity,
             'categories' => $categories,
-            'category_id' => $category_id,
         ]);
     }
 
