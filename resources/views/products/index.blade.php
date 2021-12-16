@@ -15,18 +15,18 @@
                     <div class="col-md-12">
                         <p><b>Categories</b></p>
                         <ul class="list-unstyled">
-                            <li><a href="#" class="categoryBtn" id="category-0">All</a></li>
+                            <li><a href="{{ route('products.index') }}" class="categoryBtn" id="category-0">All</a></li>
                             @foreach ($categories as $category)
-                                <li><a href="#" class="categoryBtn" id="category-{{ $category->id }}">{{ $category->name }}</a></li>
+                                <li><a href="{{ route('products.index', ['category' => $category->slug]) }}" class="categoryBtn" id="category-{{ $category->id }}">{{ $category->name }}</a></li>
                             @endforeach
                         </ul>
                     </div>
                     <div class="col-md-12">
                         <p><b>Prices</b></p>
                         <ul class="list-unstyled">
-                            <li><a href="#">0 - 700$</a></li>
-                            <li><a href="#">700 - 2500$</a></li>
-                            <li><a href="#">2500$+</a></li>
+                            <li><a href="{{ route('products.index', ['range' => '0-700']) }}">0 - 700$</a></li>
+                            <li><a href="{{ route('products.index', ['range' => '700-2500']) }}">700 - 2500$</a></li>
+                            <li><a href="{{ route('products.index', ['range' => '2500+']) }}">2500$+</a></li>
                         </ul>    
                     </div>
                 </div>
@@ -45,32 +45,36 @@
                     @endif
                 </div>
                 <div class="row mt-4 d-flex flex-row justify-content-between">
-                    @foreach ($products as $product)
-                        <div class="col-md-4 mb-4">
-                            <div class="card px-2">
-                                <a href="{{ route('products.show', $product->id) }}"><img src="{{ asset('images/'.$product->image) }}" class="card-img-top" alt="product"></a>
-                                <div class="card-body">
-                                <a href="{{ route('products.show', $product->id) }}" class="product-title"><h5 class="card-title">{{ $product->name }}</h5></a>
-                                <div>
-                                    <span>Rating:</span>&nbsp;
-                                    <span><i class="fas fa-star"></i></span>
-                                    <span><i class="fas fa-star"></i></span>
-                                    <span><i class="fas fa-star"></i></span>
-                                    <span><i class="fas fa-star"></i></span>
-                                    <span><i class="fas fa-star"></i></span>
-                                </div>
-                                <p>Price: {{ $product->price }}$</p>
-                                @if (Session::has('cart') && array_key_exists($product->id, session()->get('cart')))
-                                    <button class="btn btn-warning w-100" disabled>Added</button>   
-                                @elseif(array_key_exists($product->id, $productQuantity) && $productQuantity[$product->id] === $product->quantity)
-                                    <button class="btn btn-warning w-100" disabled>Out of stock</button>  
-                                @else
-                                    <button class="btn btn-warning w-100 addBtn" id="{{ $product->id }}">Add to cart</button>    
-                                @endif
+                    @if($products->isEmpty())
+                        <p>There are no products that match the criteria or no products at all.</p>    
+                    @else
+                        @foreach ($products as $product)
+                            <div class="col-md-4 mb-4">
+                                <div class="card px-2">
+                                    <a href="{{ route('products.show', $product->id) }}"><img src="{{ asset('images/'.$product->image) }}" class="card-img-top" alt="product"></a>
+                                    <div class="card-body">
+                                    <a href="{{ route('products.show', $product->id) }}" class="product-title"><h5 class="card-title">{{ $product->name }}</h5></a>
+                                    <div>
+                                        <span>Rating:</span>&nbsp;
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                    </div>
+                                    <p>Price: {{ $product->price }}$</p>
+                                    @if (Session::has('cart') && array_key_exists($product->id, session()->get('cart')))
+                                        <button class="btn btn-warning w-100" disabled>Added</button>   
+                                    @elseif(array_key_exists($product->id, $productQuantity) && $productQuantity[$product->id] === $product->quantity)
+                                        <button class="btn btn-warning w-100" disabled>Out of stock</button>  
+                                    @else
+                                        <button class="btn btn-warning w-100 addBtn" id="{{ $product->id }}">Add to cart</button>    
+                                    @endif
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>
@@ -130,22 +134,6 @@
                         console.log(request.responseText);
                     }
                 });
-            });
-
-            $('.categoryBtn').click((e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-
-                let button = $(e.target);
-                let id = button[0].id.split('-')[1];
-                
-                if(id === '0') {
-                    window.location.href="/products";
-                }
-                else {
-                    window.location.href=`/products/category/${id}`;
-                }
             });
         })
     </script>
