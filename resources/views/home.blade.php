@@ -31,8 +31,8 @@
         <!-- filter-buttons -->
         <div class="row mb-5">
             <div id="filter-btns" class="col-md-10 mx-auto d-flex justify-content-center">
-                <button class="btn btn-info mr-3">All</button>
-                <button class="btn btn-info">Featured</button>
+                <a href="{{ route('home') }}" class="btn btn-info mr-3">All</a>
+                <a href="{{ route('home', ['featured' => true]) }}" class="btn btn-info">Featured</a>
             </div>
         </div>
         <!-- !filter-buttons -->
@@ -95,7 +95,7 @@
         </div>
         <div class="row flex-fill mt-2">
           <div class="col-md-12 d-flex flex-column">
-            <div class="d-flex flex-row justify-content-around h-100">
+            <div class="d-flex flex-row justify-content-around h-100 mb-4">
                 <div class="col-md-3 text-center">
                     <img src="{{ asset('images/post1.png') }}" class="w-75" alt="post-image">
                     <h3 class="mt-2">Post heading</h3>
