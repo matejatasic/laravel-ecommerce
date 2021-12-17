@@ -10,12 +10,12 @@ use App\Models\Cart;
 class ProductController extends Controller
 {
     public function index() {
-        if(!isset(request()->category)) {
+        if(isset(request()->category)) {
             $products = Product::with('category')->whereHas('category', function ($query) {
                 $query->where('slug', request()->category);
             })->get(); 
         }
-        if(isset(request()->range)) {
+        else if(isset(request()->range)) {
             if(request()->range === '0-700') {
                 $products = Product::where('price', '<=', '700')->get();
             }
