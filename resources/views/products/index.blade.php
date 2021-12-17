@@ -3,7 +3,7 @@
 @section('content')
     <div class="row mb-5" id="adress-bar">
         <div class="col-md-4 text-center pt-3">
-            <p>Home > Shop > @if ($category_id === 0) All @else {{ $categories[$category_id - 1]->name }} @endif</p>
+            <p>Home > Shop</p>
         </div>
         <div class="col-md-8"></div>
     </div>
@@ -44,7 +44,7 @@
                         @endforeach
                     @endif
                 </div>
-                <div class="row mt-4 d-flex flex-row justify-content-between">
+                <div class="row mt-4 d-flex flex-row">
                     @if($products->isEmpty())
                         <p>There are no products that match the criteria or no products at all.</p>    
                     @else
