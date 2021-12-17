@@ -15,9 +15,9 @@
                     <div class="col-md-12">
                         <p><b>Categories</b></p>
                         <ul class="list-unstyled">
-                            <li><a href="{{ route('products.index') }}" class="categoryBtn" id="category-0">All</a></li>
+                            <li><a href="{{ route('products.index') }}">All</a></li>
                             @foreach ($categories as $category)
-                                <li><a href="{{ route('products.index', ['category' => $category->slug]) }}" class="categoryBtn" id="category-{{ $category->id }}">{{ $category->name }}</a></li>
+                                <li><a href="{{ route('products.index', ['category' => $category->slug]) }}">{{ $category->name }}</a></li>
                             @endforeach
                         </ul>
                     </div>
