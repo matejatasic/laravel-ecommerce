@@ -16,19 +16,24 @@ class CategorySeeder extends Seeder
     {
         $categories = [
             [
-                'name' => 'Lapotops'
+                'name' => 'Lapotops',
+                'slug' => 'laptops',
             ],
             [
-                'name' => 'Mobile Phones'
+                'name' => 'Mobile Phones',
+                'slug' => 'mobile_phones',
             ],
             [
-                'name' => 'Tablets'
+                'name' => 'Tablets',
+                'slug' => 'tablets',
             ],
             [
-                'name' => 'PCs'
+                'name' => 'PCs',
+                'slug' => 'pcs',
             ],
             [
-                'name' => 'TVs'
+                'name' => 'TVs',
+                'slug' => 'tvs',
             ],
         ];
 
