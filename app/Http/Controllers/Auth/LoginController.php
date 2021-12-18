@@ -32,7 +32,7 @@ class LoginController extends Controller
      */
     public function redirectTo() {
         if(Auth::user()->isAdmin()) {
-            return '/admin/dashboard';
+            return '/admin';
         }
         else {
             return '/';
@@ -59,6 +59,7 @@ class LoginController extends Controller
                 $userCart[$cartProduct->id] = [
                     "name" => $cartProduct->name,
                     "quantity" => $cartProduct->quantity,
+                    "details" => $cartProduct->details,
                     "price" => $cartProduct->price,
                     "image" => $cartProduct->image,
                 ];
@@ -69,11 +70,12 @@ class LoginController extends Controller
             $userCart[$cartProduct->id] = [
                 "name" => $cartProduct->name,
                 "quantity" => $cartProduct->quantity,
+                "details" => $cartProduct->details,
                 "price" => $cartProduct->price,
                 "image" => $cartProduct->image,    
             ];
         }
-        
+
         Session::put('cart', $userCart);
     }
 
