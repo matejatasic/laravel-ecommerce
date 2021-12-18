@@ -35,6 +35,9 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('products.index') }}">Shop</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
+                    @if (Auth::user()->isAdmin())
+                        <li class="nav-item"><a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a></li>    
+                    @endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->
