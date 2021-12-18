@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
@@ -26,6 +27,11 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.ind
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
 Route::group(['middleware' => 'auth' ], function() {
+    // Admin
+    Route::group(['middleware' => 'admin'], function() {
+        Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    });
+
     // Cart
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/{id}', [CartController::class, 'store'])->name('cart.store');
