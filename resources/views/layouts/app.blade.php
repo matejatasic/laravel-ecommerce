@@ -10,13 +10,16 @@
     <title>Laravel Ecommerce</title>
 
     <!-- Font awesome -->
-    <!-- Your font awesome kit link here -->
+    <script src="https://kit.fontawesome.com/f9d2d5cb9c.js" crossorigin="anonymous"></script>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- Extra css -->
+    @yield('extra-css')
 </head>
 <body class="d-flex flex-column min-vh-100">
     <!-- navbar -->
@@ -35,7 +38,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('products.index') }}">Shop</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
-                    @if (Auth::user()->isAdmin())
+                    @if (Auth::check() && Auth::user()->isAdmin())
                         <li class="nav-item"><a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a></li>    
                     @endif
                 </ul>
@@ -115,7 +118,7 @@
         </div>
     </footer>
     <!-- footer -->
-    
+
     @yield('scripts')
 </body>
 </html>
