@@ -10,7 +10,7 @@
     <title>Laravel Ecommerce</title>
 
     <!-- Font awesome -->
-    <script src="https://kit.fontawesome.com/f9d2d5cb9c.js" crossorigin="anonymous"></script>
+    <!-- Your font awesome kit here -->
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
