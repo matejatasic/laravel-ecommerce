@@ -38,7 +38,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('products.index') }}">Shop</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
-                    @if (Auth::user()->isAdmin())
+                    @if (Auth::check() && Auth::user()->isAdmin())
                         <li class="nav-item"><a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a></li>    
                     @endif
                 </ul>
@@ -96,31 +96,26 @@
                     <ul class="nav flex-column justify-content-between h-75">
                         <li class="nav-item">
                             <a class="nav-link active text-white" href="{{ route('admin.dashboard') }}">
-                                <span data-feather="home"></span>
                                 Dashboard <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">
-                                <span data-feather="file"></span>
+                            <a class="nav-link text-white" href="{{ route('admin.getOrders') }}">
                                 Orders
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="#">
-                                <span data-feather="shopping-cart"></span>
                                 Products
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="#">
-                                <span data-feather="users"></span>
                                 Customers
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="#">
-                                <span data-feather="bar-chart-2"></span>
                                 Reports
                             </a>
                         </li>
