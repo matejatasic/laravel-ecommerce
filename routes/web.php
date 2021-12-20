@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth' ], function() {
     // Admin
     Route::group(['middleware' => 'admin'], function() {
         Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/admin/orders', [AdminController::class, 'getOrders'])->name('admin.getOrders');
     });
 
     // Cart
