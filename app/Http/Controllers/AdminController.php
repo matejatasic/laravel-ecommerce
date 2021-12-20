@@ -19,4 +19,12 @@ class AdminController extends Controller
             'customer_count' => $customer_count,
         ]);
     }
+
+    public function getOrders() {
+        $orders = Order::where('error', null)->get();
+        
+        return view('admin.orders', [
+            'orders' => $orders,
+        ]);
+    }
 }
