@@ -26,7 +26,7 @@
                 @foreach ($cart as $cartProduct)
                     <div class="card mb-3">
                         <div class="row no-gutters">
-                            <div class="col-md-2">
+                            <div class="col-md-2 pl-2">
                                 <a href="{{ route('products.show', $cartProduct->product_id) }}"><img src="{{ asset('images/'.$cartProduct->product->image) }}" alt="product"></a>
                             </div>
                             <div class="col-md-5">
