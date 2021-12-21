@@ -18,6 +18,11 @@ class CheckoutController extends Controller
 {
     public function index() {
         $cart = Cart::where('user_id', Auth::id())->get();
+        
+        if(count($cart) === 0) {
+            return redirect()->route('cart.index')->withErrors('You don\'t have any items in the cart!');
+        }
+
         $price = $this->getPrice($cart);
 
         return view('checkout', [
@@ -51,7 +56,7 @@ class CheckoutController extends Controller
                     'quantity' => $quantity,
                 ],
             ]);
-            
+
             $order = $this->addOrders($request, null, $price, $cart);
             Mail::send(new OrderMade($order));
 
@@ -69,6 +74,15 @@ class CheckoutController extends Controller
     }
 
     private function addOrders($request, $error, $price, $cart) {
+        $this->validate($request, [
+            'name' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'province' => 'required',
+            'postalcode' => 'required',
+            'phone' => 'required',
+        ]);
+
         $order = Order::create([
             'user_id' => Auth::id(),
             'email' => $request->email,
