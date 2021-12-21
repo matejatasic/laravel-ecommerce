@@ -38,7 +38,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Address</label>
-                                <input type="text" class="form-control" id="address" name="address" value="{{ old('name') }}" required>
+                                <input type="text" class="form-control" id="address" name="address" value="{{ old('address') }}" required>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col">
@@ -96,7 +96,7 @@
                         @foreach ($cart as $cartProduct)
                             <div class="card mb-3">
                                 <div class="row no-gutters">
-                                    <div class="col-md-3 mt-4">
+                                    <div class="col-md-3 mt-4 pl-2">
                                         <img src="{{ asset('images/'.$cartProduct->product->image) }}" alt="cart_product_image">
                                     </div>
                                     <div class="col-md-6">
