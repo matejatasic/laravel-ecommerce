@@ -140,20 +140,42 @@ footer {
     border: 1px solid #ccc;
     border-radius: 5px;
   
-  }
+}
   
-  .StripeElement--focus {
+.StripeElement--focus {
     box-shadow: 0 1px 3px 0 #cfd7df;
-  }
+}
   
-  .StripeElement--invalid {
+.StripeElement--invalid {
     border-color: #fa755a;
-  }
-  
-  .StripeElement--webkit-autofill {
+}
+
+.StripeElement--webkit-autofill {
     background-color: #fefde5 !important;
-  }
-  
-  #card-errors {
+}
+
+#card-errors {
     color: #fa755a;
-  }
+}
+
+// Admin Sidebar
+#sidebarMenu {
+    height: 80vh;
+    
+    .nav-link {
+        font-size: 1.2rem;
+
+        &:hover {
+            color: rgb(218, 216, 216) !important;
+        }  
+    }  
+}
+
+.modal-dialog {
+    overflow-y: initial;
+}
+
+.modal-body {
+    height: 80vh;
+    overflow-y: auto;
+}
