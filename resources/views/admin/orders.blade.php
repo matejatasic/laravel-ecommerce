@@ -42,10 +42,10 @@
     </div>
 
     <!-- modal -->
-    <div class="modal" id="viewModal" tabindex="-1">
+    <div class="modal" id="modal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header bg-success text-white">
+                <div class="modal-header text-white">
                     <h4 class="modal-title"></h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -64,7 +64,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(() => {
-            const modal = $('#viewModal');
+            const modal = $('#modal');
 
             $('.viewBtn').click((e) => {
                 event.stopPropagation();
@@ -83,6 +83,7 @@
                     let time = new Date(order['created_at']);
                     let date = `${time.getDate()} ${months[time.getMonth()]}, ${time.getFullYear()}`
 
+                    $('.modal-header').addClass('bg-primary');
                     $('.modal-title').text('Order')
                     
                     $('.modal-body').html(`
