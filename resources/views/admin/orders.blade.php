@@ -28,7 +28,7 @@
                         <td>{{ $order->email }}</td>
                         <td>{{ $order->name }}</td>
                         <td>{{ $order->phone }}</td>
-                        <td>{{ $order->total }}</td>
+                        <td>{{ $order->total }}$</td>
                         <td>{{ $order->shipped !== 0 ? 'Yes' : 'No' }}</td>
                         <td>{{ date('j F, Y', strtotime($order->created_at)) }}</td>
                         <td>
@@ -87,9 +87,9 @@
                         <p><b>Postal code:</b> ${order['postalcode']}</p>    
                         <p><b>Phone number:</b> ${order['phone']}</p>    
                         <p><b>Name on card:</b> ${order['name_on_card']}</p>
-                        <p><b>Subtotal:</b> ${order['subtotal']}</p>    
-                        <p><b>Tax:</b> ${order['tax']}</p>    
-                        <p><b>Total:</b> ${order['total']}</p>    
+                        <p><b>Subtotal:</b> ${order['subtotal']}$</p>    
+                        <p><b>Tax:</b> ${order['tax']}$</p>    
+                        <p><b>Total:</b> ${order['total']}$</p>    
                         <p><b>Payment gateway:</b> ${order['payment_gateway']}</p>    
                         <p><b>Shipped:</b> ${order['shipped'] === '0' ? 'No' : 'Yes'}</p>
                         <p><b>Date:</b> ${order['created_at']}</p>
