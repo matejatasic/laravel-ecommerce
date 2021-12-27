@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Order;
 
@@ -34,5 +35,36 @@ class AdminController extends Controller
         return response()->json([
             'data' => $order,
         ]);
+    }
+
+    public function getProducts() {
+        $products = Product::paginate(5);
+
+        return view('admin.products', [
+            'products' => $products,
+        ]);
+    }
+
+    public function showProduct($id) {
+        $product = Product::find($id);
+
+        return response()->json([
+            'data' => $product,
+            'category' => $product->category->name,
+        ]);
+    }
+
+    public function editProduct($id) {
+        $product = Product::find($id);
+        $categories = Category::all();
+
+        return response()->json([
+            'data' => $product,
+            'categories' => $categories,
+        ]);
+    }
+
+    public function updateProduct(Request $request, $id) {
+
     }
 }
