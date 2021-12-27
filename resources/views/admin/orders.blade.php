@@ -75,6 +75,13 @@
                 
                 $.get('/admin/orders/' + id, (data) => {
                     let order = data.data;
+                    let months = [
+                        "January", "February", "March", "April", "May", "June",
+                        "July", "August", "September", "October", "November", "December"
+                    ];
+
+                    let time = new Date(order['created_at']);
+                    let date = `${time.getDate()} ${months[time.getMonth()]}, ${time.getFullYear()}`
 
                     $('.modal-title').text('Order')
                     
@@ -92,7 +99,7 @@
                         <p><b>Total:</b> ${order['total']}$</p>    
                         <p><b>Payment gateway:</b> ${order['payment_gateway']}</p>    
                         <p><b>Shipped:</b> ${order['shipped'] === '0' ? 'No' : 'Yes'}</p>
-                        <p><b>Date:</b> ${order['created_at']}</p>
+                        <p><b>Date:</b> ${date}</p>
                     `);
                 });
             });
