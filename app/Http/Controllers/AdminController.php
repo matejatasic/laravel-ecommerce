@@ -41,9 +41,11 @@ class AdminController extends Controller
 
     public function getProducts() {
         $products = Product::paginate(5);
+        $categories = Category::all();
 
         return view('admin.products', [
             'products' => $products,
+            'categories' => $categories,
         ]);
     }
 
@@ -56,13 +58,45 @@ class AdminController extends Controller
         ]);
     }
 
+    public function addProduct(Request $request) {
+        $product = new Product;
+
+        $this->validate($request, [
+            'name' => 'required|unique:products,name|max:50',
+            'slug' => 'required|unique:products,slug|max:30',
+            'details' => 'required|max:255',
+            'description' => 'required',
+            'price' => 'required|integer',
+            'featured' => 'required|in:1,0',
+            'quantity' => 'required|integer',
+            'category' => 'required|exists:categories,id',
+            'image' => 'required|mimes:jpg,png,svg',
+        ]);
+
+        $image_name = time() . 'product_image' . $request->image->extension();
+        $request->image->move(public_path('images/'), $image_name);
+
+        $product->name = $request->name;
+        $product->slug = $request->slug;
+        $product->details = $request->details;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->featured = $request->featured;
+        $product->quantity = $request->quantity;
+        $product->category_id = $request->category;
+        $product->image = $image_name;
+        $product->save();
+
+        Session::flash('success', 'You have successfully added the product!');
+
+        return redirect()->route('admin.getProducts');
+    }
+
     public function editProduct($id) {
         $product = Product::find($id);
-        $categories = Category::all();
 
         return response()->json([
             'data' => $product,
-            'categories' => $categories,
         ]);
     }
 
@@ -86,7 +120,7 @@ class AdminController extends Controller
         if($request->hasFile('img_path') && $request->img_path->isValid()) {
             $old_image_name = $product->image;
             $image_name = time() . 'product_image' . $request->image->extension();
-            $request->image->move(public_path('images/'), $new_image_name);
+            $request->image->move(public_path('images/'), $image_name);
 
             File::delete(public_path('images/'.$old_image_name));
         }
@@ -105,8 +139,16 @@ class AdminController extends Controller
         $product->image = $image_name;
         $product->save();
 
-        Session::flash('success', 'You have successfully update the product!');
+        Session::flash('success', 'You have successfully updated the product!');
 
+        return redirect()->route('admin.getProducts');
+    }
+
+    public function deleteProduct($id) {
+        $product = Product::find($id);
+        $product->delete();
+
+        Session::flash('success', 'You have successfully deleted the product!');
         return redirect()->route('admin.getProducts');
     }
 }
