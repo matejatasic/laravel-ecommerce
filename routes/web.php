@@ -34,8 +34,10 @@ Route::group(['middleware' => 'auth' ], function() {
         Route::get('/admin/orders/{id}', [AdminController::class, 'showOrder']);
         Route::get('/admin/products', [AdminController::class, 'getProducts'])->name('admin.getProducts');
         Route::get('/admin/products/{id}', [AdminController::class, 'showProduct']);
+        Route::post('/admin/products/add', [AdminController::class, 'addProduct']);
         Route::get('/admin/products/edit/{id}', [AdminController::class, 'editProduct']);
         Route::put('/admin/products/update/{id}', [AdminController::class, 'updateProduct']);
+        Route::delete('/admin/products/delete/{id}', [AdminController::class, 'deleteProduct'])->name('admin.deleteProduct');
     });
 
     // Cart
