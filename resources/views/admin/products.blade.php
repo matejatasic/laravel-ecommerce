@@ -8,6 +8,19 @@
         </div>
     </div>
     <div class="row mt-3">
+        <div class="col-md-12">
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    <div class="alert alert-danger">{{ $error }}</div>
+                @endforeach
+            @endif
+            @if (Session::has('success'))
+                <div class="alert alert-success">{{ Session::get('success') }}</div>
+            @endif
+        </div>
+        <div class="col-md-12 d-flex justify-content-end mb-3">
+            <button class="btn btn-success addBtn">Add</button>
+        </div>
         <table class="table">
             <thead>
                 <tr>
@@ -128,11 +141,11 @@
 
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" name="name" placeholder="${product['name']}">
+                                <input type="text" class="form-control" name="name" value="${product['name']}">
                             </div>
                             <div class="form-group">
                                 <label>Slug</label>
-                                <input type="text" class="form-control" name="slug" placeholder="${product['slug']}">
+                                <input type="text" class="form-control" name="slug" value="${product['slug']}">
                             </div>
                             <div class="form-group">
                                 <label>Details</label>
@@ -144,23 +157,24 @@
                             </div>
                             <div class="form-group">
                                 <label>Price</label>
-                                <input type="number" class="form-control" name="price" placeholder="${product['price']}">
+                                <input type="number" class="form-control" name="price" value="${product['price']}">
                             </div>
                             <div class="form-group">
                                 <label>Featured</label>
                                 <select class="form-control" name="featured">
-                                    <option>-</option>
+                                    <option disabled selected>-</option>
                                     <option value="1">Yes</option>
                                     <option value="0">No</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>Quantity</label>
-                                <input type="number" class="form-control" name="quantity" placeholder="${product['quantity']}">
+                                <input type="number" class="form-control" name="quantity" value="${product['quantity']}">
                             </div>
                             <div class="form-group">
                                 <label>Category</label>
                                 <select class="form-control" name="category">
+                                    <option disabled selected>-</option>
                                     ${select}
                                 </select>
                             </div>
