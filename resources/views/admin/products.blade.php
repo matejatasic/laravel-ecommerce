@@ -10,16 +10,18 @@
     <div class="row mt-3">
         <div class="col-md-12">
             @if ($errors->any())
-                @foreach ($errors->all() as $error)
-                    <div class="alert alert-danger">{{ $error }}</div>
-                @endforeach
+                <ul class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                        <li class="ml-2 mb-2">{{ $error }}</li>
+                    @endforeach
+                </ul>
             @endif
             @if (Session::has('success'))
                 <div class="alert alert-success">{{ Session::get('success') }}</div>
             @endif
         </div>
         <div class="col-md-12 d-flex justify-content-end mb-3">
-            <button class="btn btn-success addBtn">Add</button>
+            <button class="btn btn-success" id="addBtn">Add</button>
         </div>
         <table class="table">
             <thead>
@@ -42,9 +44,15 @@
                         <td>{{ $product->price }}$</td>
                         <td>{{ $product->quantity}}</td>
                         <td>{{ date('j F, Y', strtotime($product->created_at)) }}</td>
-                        <td>
+                        <td class="d-flex flex-column">
                             <button class="btn btn-primary viewBtn" id="{{ $product->id }}">View</button>
                             <button class="btn btn-success editBtn" id="edit-{{$product->id}}">Edit</button>
+                            <form action="{{ route('admin.deleteProduct', $product->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                
+                                <input type="submit" class="btn btn-danger" value="Delete">
+                            </form>
                         </td>
                     </tr>
                 @endforeach
@@ -113,9 +121,76 @@
                 });
             });
 
+            $('#addBtn').click((e) => {
+                modal.css('display', 'block');
+                let categories = @json($categories);
+                
+                let select = '';
+                    
+                for(let i=0; i < categories.length; i++) {
+                    select += `
+                        <option value="${categories[i]['id']}">${categories[i]['name']}</option>
+                    `;
+                }
+
+                $('.modal-header').addClass('bg-success');
+                $('.modal-title').text('Add');
+
+                $('.modal-body').html(`
+                    <form action="/admin/products/add" method="POST" enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" name="name" placeholder="Product name...">
+                        </div>
+                        <div class="form-group">
+                            <label>Slug</label>
+                            <input type="text" class="form-control" name="slug" placeholder="Product slug...">
+                        </div>
+                        <div class="form-group">
+                            <label>Details</label>
+                            <textarea class="form-control" name="details" placeholder="Product details..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control" name="description" placeholder="Product description..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Price</label>
+                            <input type="number" class="form-control" name="price" placeholder="Product price...">
+                        </div>
+                        <div class="form-group">
+                            <label>Featured</label>
+                            <select class="form-control" name="featured">
+                                <option disabled selected>-</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <input type="number" class="form-control" name="quantity" placeholder="Product quantity...">
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select class="form-control" name="category">
+                                <option disabled selected>-</option>
+                                ${select}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Image</label>
+                            <input type="file" class="form-control-file" name="image">
+                        </div>
+                        <input type="submit" class="btn btn-success" value="Add"> 
+                    </form>
+                `);   
+            });
+
             $('.editBtn').click((e) => {
-                event.stopPropagation();
-                event.stopImmediatePropagation();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
             
                 let id = e.target.id.split('-')[1];
                 modal.css('display', 'block');
@@ -123,7 +198,7 @@
 
                 $.get('/admin/products/edit/' + id, (data) => {
                     let product = data.data;
-                    let categories = data.categories;
+                    let categories = @json($categories);
                     
                     for(let i=0; i < categories.length; i++) {
                         select += `
