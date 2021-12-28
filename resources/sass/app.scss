@@ -160,15 +160,27 @@ footer {
 
 // Admin Sidebar
 #sidebarMenu {
-    height: 80vh;
+    min-height: calc(100vh - 50px);
     
     .nav-link {
         font-size: 1.2rem;
+        margin-bottom: 1.5rem;
 
         &:hover {
             color: rgb(218, 216, 216) !important;
         }  
     }  
+}
+
+table {
+    tbody {
+        td:last-child {
+            button, input {
+                width: 4rem;
+                margin-bottom: 0.5rem;
+            }
+        }
+    }
 }
 
 .modal-dialog {
