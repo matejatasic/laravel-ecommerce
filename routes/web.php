@@ -35,7 +35,7 @@ Route::group(['middleware' => 'auth' ], function() {
         Route::get('/admin/products', [AdminController::class, 'getProducts'])->name('admin.getProducts');
         Route::get('/admin/products/{id}', [AdminController::class, 'showProduct']);
         Route::get('/admin/products/edit/{id}', [AdminController::class, 'editProduct']);
-        Route::get('/admin/products/update/{id}', [AdminController::class, 'updateProduct']);
+        Route::put('/admin/products/update/{id}', [AdminController::class, 'updateProduct']);
     });
 
     // Cart
