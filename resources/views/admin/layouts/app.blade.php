@@ -110,7 +110,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">
+                            <a class="nav-link text-white" href="{{ route('admin.getCustomers') }}">
                                 Customers
                             </a>
                         </li>
