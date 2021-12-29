@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <h1 class="text-center">Orders</h1>
+            <h1 class="text-center">Products</h1>
             <hr>
         </div>
     </div>
@@ -46,13 +46,8 @@
                         <td>{{ date('j F, Y', strtotime($product->created_at)) }}</td>
                         <td class="d-flex flex-column">
                             <button class="btn btn-primary viewBtn" id="{{ $product->id }}">View</button>
-                            <button class="btn btn-success editBtn" id="edit-{{$product->id}}">Edit</button>
-                            <form action="{{ route('admin.deleteProduct', $product->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                
-                                <input type="submit" class="btn btn-danger" value="Delete">
-                            </form>
+                            <button class="btn btn-success editBtn" id="edit-{{ $product->id }}">Edit</button>
+                            <button class="btn btn-danger deleteBtn" id="delete-{{ $product->id }}">Delete</button>
                         </td>
                     </tr>
                 @endforeach
@@ -65,7 +60,7 @@
     <div class="modal" id="modal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header text-white">
+                <div class="modal-header text-white bg-primary">
                     <h4 class="modal-title"></h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -85,6 +80,7 @@
     <script>
         $(document).ready(() => {
             const modal = $('#modal');
+            let lastClass;
 
             $('.viewBtn').click((e) => {
                 event.stopPropagation();
@@ -103,7 +99,9 @@
 
                     let time = new Date(product['created_at']);
                     let date = `${time.getDate()} ${months[time.getMonth()]}, ${time.getFullYear()}`
-            
+                    
+                    lastClass = $('.modal-header').attr('class').split(' ').pop();
+                    $('.modal-header').removeClass(lastClass);
                     $('.modal-header').addClass('bg-primary');
                     $('.modal-title').text('Product')
                     
@@ -122,6 +120,9 @@
             });
 
             $('#addBtn').click((e) => {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+
                 modal.css('display', 'block');
                 let categories = @json($categories);
                 
@@ -133,6 +134,8 @@
                     `;
                 }
 
+                lastClass = $('.modal-header').attr('class').split(' ').pop();
+                $('.modal-header').removeClass(lastClass);
                 $('.modal-header').addClass('bg-success');
                 $('.modal-title').text('Add');
 
@@ -206,13 +209,15 @@
                         `;
                     }
 
+                    lastClass = $('.modal-header').attr('class').split(' ').pop();
+                    $('.modal-header').removeClass(lastClass);
                     $('.modal-header').addClass('bg-success');
                     $('.modal-title').text('Edit');
 
                     $('.modal-body').html(`
                         <form action="/admin/products/update/${product['id']}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            @method('PUT');
+                            @method('PUT')
 
                             <div class="form-group">
                                 <label>Name</label>
@@ -262,10 +267,37 @@
                     `);   
                 });
             });
+
+            $('.deleteBtn').click((e) => {
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+
+                let id = e.target.id.split('-')[1];
+                modal.css('display', 'block');
+
+                lastClass = $('.modal-header').attr('class').split(' ').pop();
+                $('.modal-header').removeClass(lastClass);
+                $('.modal-header').addClass('bg-danger');
+                $('.modal-title').text('Delete');
+
+                $('.modal-body').html(`
+                    <h5>Are you sure you want to delete this product?</h5>
+                    <form action="/admin/products/delete/${id}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        
+                        <input type="submit" class="btn btn-danger btn-lg" value="Delete">
+                    </form>
+                `);
+            });
             
             $('.close').click(() => {
                 modal.css('display', 'none');
             });
+
+            $(window).click((e) => {
+                if(e.target !== modal && modal.css('display') === 'block') modal.css('display', 'none');
+            })
         });
     </script>
 @endsection
