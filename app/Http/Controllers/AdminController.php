@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File; 
+use App\Models\User;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Order;
@@ -150,5 +151,13 @@ class AdminController extends Controller
 
         Session::flash('success', 'You have successfully deleted the product!');
         return redirect()->route('admin.getProducts');
+    }
+
+    public function getCustomers() {
+        $customers = User::has('orders')->get();
+        
+        return view('admin.customers', [
+            'customers' => $customers,
+        ]);
     }
 }
