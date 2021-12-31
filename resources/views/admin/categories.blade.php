@@ -89,6 +89,10 @@
                     `);
                 });
             });
-        })
+            
+            $('.close').click(() => {
+                modal.css('display', 'none');
+            }); 
+        });
     </script>
 @endsection
