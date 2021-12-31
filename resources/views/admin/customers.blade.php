@@ -27,10 +27,11 @@
                         <td>{{ $customer->name }}</td>
                         <td>{{ ucfirst($customer->role) }}</td>
                         <td>{{ count($customer->orders->where('error', null)) }}</td>
-                        <td>{{ $customer->created_at }}</td>
+                        <td>{{ date('j F, Y', strtotime($customer->created_at)) }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+        {{ $customers->links() }}
     </div>
 @endsection
