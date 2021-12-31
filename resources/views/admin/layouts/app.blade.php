@@ -115,8 +115,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">
-                                Reports
+                            <a class="nav-link text-white" href="{{ route('admin.getCategories') }}">
+                                Categories
                             </a>
                         </li>
                     </ul>
