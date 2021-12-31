@@ -154,10 +154,18 @@ class AdminController extends Controller
     }
 
     public function getCustomers() {
-        $customers = User::has('orders')->get();
+        $customers = User::has('orders')->paginate(5);
         
         return view('admin.customers', [
             'customers' => $customers,
+        ]);
+    }
+
+    public function getCategories() {
+        $categories = Category::paginate(5);
+
+        return view('admin.categories', [
+            'categories' => $categories,
         ]);
     }
 }
