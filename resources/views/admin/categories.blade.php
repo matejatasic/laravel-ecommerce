@@ -42,6 +42,7 @@
                         <td>{{ date('j F, Y', strtotime($category->created_at)) }}</td>
                         <td>
                             <button class="btn btn-success btnEdit" id="{{ $category->id }}">Edit</button>
+                            <button class="btn btn-danger btnDelete" id="delete-{{ $category->id }}">Delete</button>
                         </td>
                     </tr>
                 @endforeach
@@ -75,38 +76,6 @@
         $(document).ready(() => {
             let modal = $('.modal');
 
-            $('.btnEdit').click((e) => {
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-
-                let id = e.target.id;
-                modal.css('display', 'block');
-
-                $.get('/admin/categories/edit/' + id, (data) => {
-                    let category = data.data;
-
-                    $('.modal-header').addClass('bg-success');
-                    $('.modal-title').text('Edit');
-
-                    $('.modal-body').html(`
-                        <form action="/admin/categories/update/${category['id']}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" name="name" class="form-control" value="${category['name']}">
-                            </div>
-                            <div class="form-group">
-                                <label>Slug</label>
-                                <input type="text" name="slug" class="form-control" value="${category['slug']}">
-                            </div>
-                            <input type="submit" class="btn btn-success" value="Edit">
-                        </form>    
-                    `);
-                });
-            });
-
             $('#addBtn').click((e) => {
                 e.stopPropagation();
                 e.stopImmediatePropagation();
@@ -130,8 +99,65 @@
                             <label>Slug</label>
                             <input type="text" name="slug" class="form-control">
                         </div>
-                        <input type="submit" class="btn btn-success" value="Add";
+                        <input type="submit" class="btn btn-success" value="Add">
                     </form>
+                `);
+            });
+
+            $('.btnEdit').click((e) => {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+
+                let id = e.target.id;
+                modal.css('display', 'block');
+
+                $.get('/admin/categories/edit/' + id, (data) => {
+                    let category = data.data;
+
+                    lastClass = $('.modal-header').attr('class').split(' ').pop();
+                    $('.modal-header').removeClass(lastClass);
+                    $('.modal-header').addClass('bg-success');
+                    $('.modal-title').text('Edit');
+
+                    $('.modal-body').html(`
+                        <form action="/admin/categories/update/${category['id']}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" name="name" class="form-control" value="${category['name']}">
+                            </div>
+                            <div class="form-group">
+                                <label>Slug</label>
+                                <input type="text" name="slug" class="form-control" value="${category['slug']}">
+                            </div>
+                            <input type="submit" class="btn btn-success" value="Edit">
+                        </form>    
+                    `);
+                });
+            });
+
+            $('.btnDelete').click((e) => {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+     
+                let id = e.target.id.split('-')[1];
+                modal.css('display', 'block');
+
+                lastClass = $('.modal-header').attr('class').split(' ').pop();
+                $('.modal-header').removeClass(lastClass);
+                $('.modal-header').addClass('bg-danger');
+                $('.modal-title').text('Delete');
+
+                $('.modal-body').html(`
+                    <h5>Are you sure you want to delete this product?</h5>
+                    <form action="/admin/categories/delete/${id}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        
+                        <input type="submit" class="btn btn-danger btn-lg" value="Delete">
+                    </form>    
                 `);
             });
 
