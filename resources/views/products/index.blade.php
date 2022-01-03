@@ -44,6 +44,15 @@
                         @endforeach
                     @endif
                 </div>
+                <div class="row">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="search" placeholder="Find a product...">
+                        <div class="dropdown-menu w-100" id="searchDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                        </div>
+                    </div>
+                </div>
                 <div class="row mt-4 d-flex flex-row">
                     @if($products->isEmpty())
                         <p>There are no products that match the criteria or no products at all.</p>    
@@ -86,6 +95,7 @@
     <script>
         $(document).ready(() => {
             let cartQuantity = $('#cart-quantity');
+            let token = "{{ csrf_token() }}";
 
             $('.addBtn').click((e) => {
                 e.stopPropagation();
@@ -93,7 +103,6 @@
 
                 let button = $(e.target);
                 let id = button[0].id;
-                let token = "{{ csrf_token() }}";
 
                 $.ajax({
                     url: '/cart/' + id,
@@ -134,6 +143,45 @@
                         console.log(request.responseText);
                     }
                 });
+            });
+
+            $('#search').keyup((e) => {
+                let value = e.target.value;
+                let dropdown = $('#searchDropdown');
+
+                if(value.length > 2) {
+                    $.ajax({
+                        url: '/products/search',
+                        method: 'POST',
+                        data: {
+                            'value': value,
+                            '_token': token,
+                        },
+                        success: (res) => {
+                            dropdown.css('display', 'block');
+                            
+                            if(res.length === 0) {
+                                dropdown.html('<p class="ml-3">No results</p>');
+                            }
+                            else {
+                                let html = '';
+                                for(let product of res) {
+                                    html += `
+                                        <a class="dropdown-item" href="/products/${product.id}">${product.name}</a>   
+                                    `;
+                                    
+                                    dropdown.html(html);
+                                }
+                            }     
+                        },
+                        error: (request, status, error) => {
+                            console.log(request.responseText);
+                        }
+                    });
+                }
+                else {
+                    dropdown.css('display', 'none');
+                }
             });
         })
     </script>
