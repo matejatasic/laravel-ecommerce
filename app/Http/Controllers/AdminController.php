@@ -168,4 +168,45 @@ class AdminController extends Controller
             'categories' => $categories,
         ]);
     }
+
+    public function addCategory(Request $request) {
+        $category = new Category;
+
+        $this->validate($request, [
+            'name' => 'required|unique:categories,name|max:50',
+            'slug' => 'required|unique:categories,slug|max:30',
+        ]);
+
+        $category->name = $request->name;
+        $category->slug = $request->slug;
+        $category->save();
+
+        Session::flash('success', 'You have successfully added the category!');
+
+        return redirect()->route('admin.getCategories');    
+    }
+
+    public function editCategory($id) {
+        $category = Category::find($id);
+
+        return response()->json([
+            'data' => $category,
+        ]);    
+    }
+
+    public function updateCategory(Request $request, $id) {
+        $category = Category::find($id);
+
+        $this->validate($request, [
+            'name' => 'required',
+            'slug' => $request->slug === $category->slug ? 'required' : 'required|unique:categories,slug',
+        ]);
+
+        $category->name = $request->name;
+        $category->slug = $request->slug;
+        $category->save();
+
+        Session::flash('success', 'You have successfully updated the category!');
+        return redirect()->route('admin.getCategories');
+    }
 }
