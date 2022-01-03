@@ -50,6 +50,12 @@ class ProductController extends Controller
         ]);
     }
 
+    public function search(Request $request) {
+        $products = Product::where('name', 'like', '%' . $request->value .'%')->get();
+
+        return response()->json($products);
+    }
+
     public function show($id) {
         $product = Product::find($id);
         $cart = Cart::where('product_id', $id)->get();
