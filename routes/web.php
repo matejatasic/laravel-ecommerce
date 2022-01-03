@@ -40,6 +40,8 @@ Route::group(['middleware' => 'auth' ], function() {
         Route::delete('/admin/products/delete/{id}', [AdminController::class, 'deleteProduct']);
         Route::get('/admin/customers', [AdminController::class, 'getCustomers'])->name('admin.getCustomers');
         Route::get('/admin/categories', [AdminController::class, 'getCategories'])->name('admin.getCategories');
+        Route::get('/admin/categories/edit/{id}', [AdminController::class, 'editCategory']);
+        Route::put('/admin/categories/update/{id}', [AdminController::class, 'updateCategory']);
     });
 
     // Cart
