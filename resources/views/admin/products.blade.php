@@ -83,8 +83,8 @@
             let lastClass;
 
             $('.viewBtn').click((e) => {
-                event.stopPropagation();
-                event.stopImmediatePropagation();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
 
                 let id = e.target.id;
                 modal.css('display', 'block');
@@ -294,10 +294,6 @@
             $('.close').click(() => {
                 modal.css('display', 'none');
             });
-
-            $(window).click((e) => {
-                if(e.target !== modal && modal.css('display') === 'block') modal.css('display', 'none');
-            })
         });
     </script>
 @endsection
