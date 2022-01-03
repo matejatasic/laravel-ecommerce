@@ -8,6 +8,21 @@
         </div>
     </div>
     <div class="row mt-3">
+        <div class="col-md-12">
+            @if ($errors->any())
+                <ul class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                        <li class="ml-2 mb-2">{{ $error }}</li>
+                    @endforeach
+                </ul>
+            @endif
+            @if (Session::has('success'))
+                <div class="alert alert-success">{{ Session::get('success') }}</div>
+            @endif
+        </div>
+        <div class="col-md-12 d-flex justify-content-end mb-3">
+            <button class="btn btn-success" id="addBtn">Add</button>
+        </div>
         <table class="table">
             <thead>
                 <tr>
@@ -58,41 +73,71 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(() => {
+            let modal = $('.modal');
+
             $('.btnEdit').click((e) => {
                 e.stopPropagation();
                 e.stopImmediatePropagation();
 
                 let id = e.target.id;
-                $('.modal').css('display', 'block');
+                modal.css('display', 'block');
 
-                $.get('/admin/categories/edit', (data) => {
-                    let category = data.category;
+                $.get('/admin/categories/edit/' + id, (data) => {
+                    let category = data.data;
 
                     $('.modal-header').addClass('bg-success');
                     $('.modal-title').text('Edit');
 
                     $('.modal-body').html(`
-                        <form action="/admin/products/update/${category['id']}" method="POST">
+                        <form action="/admin/categories/update/${category['id']}" method="POST">
                             @csrf
                             @method('PUT')
                             
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" name="name" value="${category['name']}">
+                                <input type="text" name="name" class="form-control" value="${category['name']}">
                             </div>
                             <div class="form-group">
                                 <label>Slug</label>
-                                <input type="text" name="slug" value="${category['slug']}">
+                                <input type="text" name="slug" class="form-control" value="${category['slug']}">
                             </div>
-                            <input type="submit" class="btn btn-success" value="Edit";
+                            <input type="submit" class="btn btn-success" value="Edit">
                         </form>    
                     `);
                 });
             });
-            
+
+            $('#addBtn').click((e) => {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+
+                modal.css('display', 'block');
+
+                lastClass = $('.modal-header').attr('class').split(' ').pop();
+                $('.modal-header').removeClass(lastClass);
+                $('.modal-header').addClass('bg-success');
+                $('.modal-title').text('Add');
+
+                $('.modal-body').html(`
+                    <form action="/admin/categories/add" method="POST">
+                        @csrf
+                        
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Slug</label>
+                            <input type="text" name="slug" class="form-control">
+                        </div>
+                        <input type="submit" class="btn btn-success" value="Add";
+                    </form>
+                `);
+            });
+
             $('.close').click(() => {
                 modal.css('display', 'none');
-            }); 
+            });
         });
     </script>
 @endsection
