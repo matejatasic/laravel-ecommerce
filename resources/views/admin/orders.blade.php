@@ -108,10 +108,6 @@
             $('.close').click(() => {
                 modal.css('display', 'none');
             });
-
-            $(window).click((e) => {
-                if(e.target !== modal && modal.css('display') === 'block') modal.css('display', 'none');
-            })
         });
     </script>
 @endsection
