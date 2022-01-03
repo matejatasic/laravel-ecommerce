@@ -209,4 +209,12 @@ class AdminController extends Controller
         Session::flash('success', 'You have successfully updated the category!');
         return redirect()->route('admin.getCategories');
     }
+
+    public function deleteCategory($id) {
+        $category = Category::find($id);
+        $category->delete();
+
+        Session::flash('success', 'You have successfully deleted the category!');
+        return redirect()->route('admin.getCategories');
+    }
 }
