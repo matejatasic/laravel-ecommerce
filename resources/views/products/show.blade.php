@@ -8,6 +8,8 @@
         <div class="col-md-8"></div>
     </div>
     <div class="container">
+        <a href="{{ route('products.index') }}" class="btn btn-dark mb-3">Back</a>
+        
         <div id="errors">
             @if ($errors->any())
                     @foreach ($errors->all() as $error)
