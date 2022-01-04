@@ -7,6 +7,10 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+html {
+    overflow-x: hidden;
+}
+
 body {
     font-family: 'Roboto';
     box-sizing: border-box;
@@ -52,7 +56,8 @@ body {
 
 #blog-container {
     background: rgb(168, 167, 167);
-    
+    width: 100vw !important;
+
     #blog-heading {
         height: 10vh;
     }
@@ -190,4 +195,11 @@ table {
 .modal-body {
     height: 80vh;
     overflow-y: auto;
+}
+
+@media only screen and (max-width: 768px) {
+    #blog-container {
+        min-height: 15rem;
+        overflow: hidden;
+    }
 }
