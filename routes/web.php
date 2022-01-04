@@ -25,7 +25,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // Products
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::post('/products/search', [ProductController::class, 'search']);
-Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
 
 Route::group(['middleware' => 'auth' ], function() {
     // Admin
