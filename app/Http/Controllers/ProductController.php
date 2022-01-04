@@ -56,9 +56,9 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
-    public function show($id) {
-        $product = Product::find($id);
-        $cart = Cart::where('product_id', $id)->get();
+    public function show($slug) {
+        $product = Product::where('slug', $slug)->first();
+        $cart = Cart::where('product_id', $product->id)->get();
         $productQuantity = 0;
         
         foreach($cart as $cartProduct) {
