@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="row mb-5" id="adress-bar">
-        <div class="col-md-4 text-center pt-3">
+        <div class="col-md-4 col-sm-6 col-8 text-center pt-3">
             <p>Home > Shop > {{ $product->name }}</p>
         </div>
-        <div class="col-md-8"></div>
+        <div class="col-md-8 col-sm-6 col-4"></div>
     </div>
     <div class="container">
         <a href="{{ route('products.index') }}" class="btn btn-dark mb-3">Back</a>
