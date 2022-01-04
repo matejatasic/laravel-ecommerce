@@ -51,9 +51,9 @@
                     @foreach ($products as $product)
                         <div class="col-md-3 mb-4">
                             <div class="card px-2">
-                                <a href="{{ route('products.show', $product->id) }}"><img src="{{ asset('images/'.$product->image) }}" class="card-img-top" alt="product"></a>
+                                <a href="{{ route('products.show', $product->slug) }}"><img src="{{ asset('images/'.$product->image) }}" class="card-img-top" alt="product"></a>
                                 <div class="card-body">
-                                <a href="{{ route('products.show', $product->id) }}" class="product-title"><h5 class="card-title">{{ $product->name }}</h5></a>
+                                <a href="{{ route('products.show', $product->slug) }}" class="product-title"><h5 class="card-title">{{ $product->name }}</h5></a>
                                 <div>
                                     <span>Rating:</span>&nbsp;
                                     <span><i class="fas fa-star"></i></span>
