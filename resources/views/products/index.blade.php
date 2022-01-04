@@ -2,15 +2,15 @@
 
 @section('content')
     <div class="row mb-5" id="adress-bar">
-        <div class="col-md-4 text-center pt-3">
+        <div class="col-md-4 col-sm-4 col-6 text-center pt-3">
             <p>Home > Shop</p>
         </div>
-        <div class="col-md-8"></div>
+        <div class="col-md-8 col-sm-8 col-8"></div>
     </div>
     <div class="container">
         <div class="row">
             <!-- sidebar -->
-            <div class="col-md-3" id="sidebar">
+            <div class="col-md-3 col-sm-3 col-3" id="sidebar">
                 <div class="row">
                     <div class="col-md-12">
                         <p><b>Categories</b></p>
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <!-- !sidebar -->
-            <div class="col-md-9">
+            <div class="col-md-9 col-sm-9 col-9">
                 <h1>Shop</h1>
                 @if (Session::has('success'))
                     <div class="alert alert-success">{{ Session::get('success') }}</div>
@@ -49,7 +49,7 @@
                     <div class="col-md-6">
                         <input type="text" class="form-control" id="search" placeholder="Find a product...">
                         <div class="dropdown-menu w-100" id="searchDropdown">
-                            <a class="dropdown-item" href="#">Action</a>
+                            
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                         <p>There are no products that match the criteria or no products at all.</p>    
                     @else
                         @foreach ($products as $product)
-                            <div class="col-md-4 mb-4">
+                            <div class="col-md-4 col-sm-6 col-12 mb-4">
                                 <div class="card px-2">
                                     <a href="{{ route('products.show', $product->id) }}"><img src="{{ asset('images/'.$product->image) }}" class="card-img-top" alt="product"></a>
                                     <div class="card-body">
