@@ -97,15 +97,15 @@
     <!-- footer -->
     <footer class="bg-dark text-white py-3 mt-auto">
         <div class="row">
-            <div class="col-md-8 text-center">
+            <div class="col-md-7 col-sm-12 col-12 text-center">
                 <p>Copyright&copy;. All rights reserved by Mateja</p>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-5 col-sm-12 col-12">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-3 text-sm-right text-right col-sm-5 col-5">
                         <p>Follow us on:</p>
                     </div>
-                    <div class="col-md-4 d-flex justify-content-between">
+                    <div class="col-md-4 col-sm-4 col-4 d-flex justify-content-between">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-youtube"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
