@@ -76,15 +76,19 @@
                     @endforeach
                 </div>
             </div>
+            <div class="col-md-12 text-center">
+                <a href="{{ route('products.index') }}" class="btn btn-primary btn-lg mx-auto">View More</a>
+            </div>
         </div>
         <!-- !products -->
     </div>
 
-    <div id="blog-container" class="row d-flex flex-column mt-4">
+    <!-- blog container -->
+    <div id="blog-container" class="row mx-0 d-flex flex-column mt-4">
         <div class="row mt-2">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-8 mx-auto">
+                    <div class="col-md-8 col-sm-10 col-10 mx-auto">
                         <h2 class="text-center">Our Blog</h2>
                         <p class="mt-3">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vel justo vestibulum orci egestas egestas. Lorem ipsum dolor sit amet, 
@@ -96,42 +100,43 @@
             </div>
         </div>
         <div class="row flex-fill mt-2">
-          <div class="col-md-12 d-flex flex-column">
-            <div class="d-flex flex-row justify-content-around h-100 mb-4">
-                <div class="col-md-3 text-center">
-                    <img src="{{ asset('images/post1.png') }}" class="w-75" alt="post-image">
-                    <h3 class="mt-2">Post heading</h3>
-                    <p class="text-left">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima ipsa officia veritatis fugiat labore eveniet autem cumque dignissimos quisquam 
-                        commodi atque laudantium fugit beatae voluptatum quae saepe neque in expedita itaque possimus laboriosam ducimus, architecto aspernatur fuga! 
-                        Laudantium aperiam debitis sunt asperiores, fugit eius laborum modi inventore. Ducimus possimus libero dolorum, ex nostrum tempore odit obcaecati tenetur. Quis, eius hic.
-                    </p>
-                    <a href="#" class="btn btn-primary">Read more</a>
-                </div>
-                <div class="col-md-3 text-center">
-                    <img src="{{ asset('images/post2.png') }}" class="w-75" alt="post-image">
-                    <h3 class="mt-2">Post heading</h3>
-                    <p class="text-left">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima ipsa officia veritatis fugiat labore eveniet autem cumque dignissimos quisquam 
-                        commodi atque laudantium fugit beatae voluptatum quae saepe neque in expedita itaque possimus laboriosam ducimus, architecto aspernatur fuga! 
-                        Laudantium aperiam debitis sunt asperiores, fugit eius laborum modi inventore. Ducimus possimus libero dolorum, ex nostrum tempore odit obcaecati tenetur. Quis, eius hic.
-                    </p>
-                    <a href="#" class="btn btn-primary">Read more</a>
-                </div>
-                <div class="col-md-3 text-center"> 
-                    <img src="{{ asset('images/post3.png') }}" class="w-75" alt="post-image">
-                    <h3 class="mt-2">Post heading</h3>
-                    <p class="text-left">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima ipsa officia veritatis fugiat labore eveniet autem cumque dignissimos quisquam 
-                        commodi atque laudantium fugit beatae voluptatum quae saepe neque in expedita itaque possimus laboriosam ducimus, architecto aspernatur fuga! 
-                        Laudantium aperiam debitis sunt asperiores, fugit eius laborum modi inventore. Ducimus possimus libero dolorum, ex nostrum tempore odit obcaecati tenetur. Quis, eius hic.
-                    </p>
-                    <a href="#" class="btn btn-primary">Read more</a>
+            <div class="col-md-12 col-sm-12 col-12 d-flex flex-column p-0">
+                <div class="d-md-flex flex-md-row flex-sm-column flex-column  justify-content-md-around h-100 mb-4">
+                    <div class="col-md-3 col-sm-10 col-10 mx-sm-auto mx-auto mb-sm-3 mb-4 text-center">
+                        <img src="{{ asset('images/post1.png') }}" class="w-75" alt="post-image">
+                        <h3 class="mt-2">Post heading</h3>
+                        <p class="text-left">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima ipsa officia veritatis fugiat labore eveniet autem cumque dignissimos quisquam 
+                            commodi atque laudantium fugit beatae voluptatum quae saepe neque in expedita itaque possimus laboriosam ducimus, architecto aspernatur fuga! 
+                            Laudantium aperiam debitis sunt asperiores, fugit eius laborum modi inventore. Ducimus possimus libero dolorum, ex nostrum tempore odit obcaecati tenetur. Quis, eius hic.
+                        </p>
+                        <a href="#" class="btn btn-primary">Read more</a>
+                    </div>
+                    <div class="col-md-3 col-sm-10 col-10 mx-sm-auto mx-auto mb-sm-3 mb-4 text-center">
+                        <img src="{{ asset('images/post2.png') }}" class="w-75" alt="post-image">
+                        <h3 class="mt-2">Post heading</h3>
+                        <p class="text-left">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima ipsa officia veritatis fugiat labore eveniet autem cumque dignissimos quisquam 
+                            commodi atque laudantium fugit beatae voluptatum quae saepe neque in expedita itaque possimus laboriosam ducimus, architecto aspernatur fuga! 
+                            Laudantium aperiam debitis sunt asperiores, fugit eius laborum modi inventore. Ducimus possimus libero dolorum, ex nostrum tempore odit obcaecati tenetur. Quis, eius hic.
+                        </p>
+                        <a href="#" class="btn btn-primary">Read more</a>
+                    </div>
+                    <div class="col-md-3 col-sm-10 col-10 mx-sm-auto mx-auto mb-sm-3 mb-3 text-center"> 
+                        <img src="{{ asset('images/post3.png') }}" class="w-75" alt="post-image">
+                        <h3 class="mt-2">Post heading</h3>
+                        <p class="text-left">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima ipsa officia veritatis fugiat labore eveniet autem cumque dignissimos quisquam 
+                            commodi atque laudantium fugit beatae voluptatum quae saepe neque in expedita itaque possimus laboriosam ducimus, architecto aspernatur fuga! 
+                            Laudantium aperiam debitis sunt asperiores, fugit eius laborum modi inventore. Ducimus possimus libero dolorum, ex nostrum tempore odit obcaecati tenetur. Quis, eius hic.
+                        </p>
+                        <a href="#" class="btn btn-primary">Read more</a>
+                    </div>
                 </div>
             </div>
-          </div>
         </div>
     </div>
+    <!-- !blog container -->
 @endsection
 
 @section('scripts')
