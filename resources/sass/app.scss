@@ -203,7 +203,13 @@ table {
         overflow: hidden;
     }
 
-    .dropdown-menu {
-        width: 25% !important;
+    nav {
+        .dropdown-menu {
+            width: 25% !important;
+        }
+    }
+
+    #searchDropdown {
+        width: 38%;
     }
 }
