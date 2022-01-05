@@ -59,9 +59,6 @@ class LoginController extends Controller
                 $userCart[$cartProduct->id] = [
                     "name" => $cartProduct->name,
                     "quantity" => $cartProduct->quantity,
-                    "details" => $cartProduct->details,
-                    "price" => $cartProduct->price,
-                    "image" => $cartProduct->image,
                 ];
             }
         }
@@ -70,9 +67,6 @@ class LoginController extends Controller
             $userCart[$cartProduct->id] = [
                 "name" => $cartProduct->name,
                 "quantity" => $cartProduct->quantity,
-                "details" => $cartProduct->details,
-                "price" => $cartProduct->price,
-                "image" => $cartProduct->image,    
             ];
         }
 
