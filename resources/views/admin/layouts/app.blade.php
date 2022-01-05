@@ -21,7 +21,7 @@
     <!-- Extra css -->
     @yield('extra-css')
 </head>
-<body class="">
+<body>
     <!-- navbar -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
         <div class="container">
@@ -91,9 +91,9 @@
     <div class="container-fluid">
         <div class="row">
             <!-- sidebar -->
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-primary sidebar collapse">
-                <div class="sidebar-sticky h-100 pt-5">
-                    <ul class="nav flex-column justify-content-between h-75">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 col-sm-12 d-md-block bg-primary sidebar mb-sm-4">
+                <div class="sidebar-sticky h-100 pt-md-5 py-sm-3">
+                    <ul class="nav flex-md-column flex-sm-row flex-column">
                         <li class="nav-item">
                             <a class="nav-link active text-white" href="{{ route('admin.dashboard') }}">
                                 Dashboard <span class="sr-only">(current)</span>
@@ -131,17 +131,17 @@
             <!-- main -->
 
             <!-- footer -->
-            <footer class="col-md-12 bg-dark text-white py-3 mt-auto">
+            <footer class="bg-dark text-white py-3 mt-auto w-100">
                 <div class="row">
-                    <div class="col-md-8 text-center">
+                    <div class="col-md-7 col-sm-12 col-12 text-center">
                         <p>Copyright&copy;. All rights reserved by Mateja</p>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-5 col-sm-12 col-12">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3 text-sm-right text-right col-sm-5 col-5">
                                 <p>Follow us on:</p>
                             </div>
-                            <div class="col-md-4 d-flex justify-content-between">
+                            <div class="col-md-4 col-sm-4 col-4 d-flex justify-content-between">
                                 <a href="#"><i class="fab fa-facebook"></i></a>
                                 <a href="#"><i class="fab fa-youtube"></i></a>
                                 <a href="#"><i class="fab fa-instagram"></i></a>
