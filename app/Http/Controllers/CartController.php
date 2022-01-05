@@ -51,9 +51,6 @@ class CartController extends Controller
         $userCart[$id] = [
             "name" => $product->name,
             "quantity" => 1,
-            'details' => $product->details,
-            "price" => $product->price,
-            "image" => $product->image,
         ];
         session()->put('cart', $userCart);
         
@@ -104,7 +101,10 @@ class CartController extends Controller
         $cartProduct = Cart::find($id);
 
         if(SaveForLater::where('product_id', $cartProduct->product_id)->where('user_id', Auth::id())->exists()) {
-            return redirect()->route('cart.index')->withErrors('alreadySaved', 'This item has already been saved for later!');
+            $errors = [];
+            $errors['alreadySaved'] = 'This item has already been saved for later!';
+
+            return redirect()->route('cart.index')->withErrors($errors);
         }
 
         $saveForLater = new SaveForLater;
@@ -136,7 +136,7 @@ class CartController extends Controller
             $qty += $cartProduct['quantity'];
         }
 
-        if(Product::where('product_id' , $saveForLater->product_id)->count() < $qty) {
+        if(Product::where('id' , $saveForLater->product_id)->count() < $qty) {
             return redirect()->route('cart.index')->withErrors('out_of_stock', 'This item is out of stock!');   
         }
 
@@ -150,9 +150,6 @@ class CartController extends Controller
         $userCart[$cart->product_id] = [
             "name" => $cart->product->name,
             "quantity" => 1,
-            'details' => $cart->product->details,
-            "price" => $cart->product->price,
-            "image" => $cart->product->image,    
         ];
         session()->put('cart', $userCart); 
         $saveForLater->delete();
