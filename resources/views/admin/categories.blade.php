@@ -2,13 +2,13 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 col-sm-12 col-12">
             <h1 class="text-center">Categories</h1>
             <hr>
         </div>
     </div>
     <div class="row mt-3">
-        <div class="col-md-12">
+        <div class="col-md-12 col-sm-12 col-12">
             @if ($errors->any())
                 <ul class="alert alert-danger">
                     @foreach ($errors->all() as $error)
@@ -20,35 +20,37 @@
                 <div class="alert alert-success">{{ Session::get('success') }}</div>
             @endif
         </div>
-        <div class="col-md-12 d-flex justify-content-end mb-3">
+        <div class="col-md-12 col-sm-12 col-12 d-flex justify-content-end mb-3">
             <button class="btn btn-success" id="addBtn">Add</button>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Slug</th>
-                    <th>Date</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($categories as $category)
+        <div class="col-md-12 col-sm-12 col-12">
+            <table class="table categoriesTable">
+                <thead>
                     <tr>
-                        <td>{{ $category->id }}</td>
-                        <td>{{ $category->name }}</td>
-                        <td>{{ $category->slug }}</td>
-                        <td>{{ date('j F, Y', strtotime($category->created_at)) }}</td>
-                        <td>
-                            <button class="btn btn-success btnEdit" id="{{ $category->id }}">Edit</button>
-                            <button class="btn btn-danger btnDelete" id="delete-{{ $category->id }}">Delete</button>
-                        </td>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Slug</th>
+                        <th>Date</th>
+                        <th>Action</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
-        {{ $categories->links() }}
+                </thead>
+                <tbody>
+                    @foreach ($categories as $category)
+                        <tr>
+                            <td>{{ $category->id }}</td>
+                            <td>{{ $category->name }}</td>
+                            <td>{{ $category->slug }}</td>
+                            <td>{{ date('j F, Y', strtotime($category->created_at)) }}</td>
+                            <td>
+                                <button class="btn btn-success btnEdit" id="{{ $category->id }}">Edit</button>
+                                <button class="btn btn-danger btnDelete" id="delete-{{ $category->id }}">Delete</button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            {{ $categories->links() }}
+        </div>
     </div>
 
     <!-- modal -->
