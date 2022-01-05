@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row mb-5" id="adress-bar">
-        <div class="col-md-4 text-center pt-3">
+        <div class="col-md-4 col-sm-4 col-6 text-center pt-3">
             <p>Home > Shopping Cart</p>
         </div>
         <div class="col-md-8"></div>
@@ -24,22 +24,22 @@
                     <div class="alert alert-success">{{ Session::get('success') }}</div>
                 @endif
                 @foreach ($cart as $cartProduct)
-                    <div class="card mb-3">
+                    <div class="card mb-2">
                         <div class="row no-gutters">
-                            <div class="col-md-2 pl-2">
+                            <div class="col-md-2 col-sm-12 col-12 pl-2">
                                 <a href="{{ route('products.show', $cartProduct->product_id) }}"><img src="{{ asset('images/'.$cartProduct->product->image) }}" alt="product"></a>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-4 col-sm-8 col-8 mx-sm-auto text-sm-center mx-auto text-center">
                                 <div class="card-body">
                                     <a href="{{ route('products.show', $cartProduct->product_id) }}"><h5 class="card-title">{{ $cartProduct->product->name }}</h5></a>
                                     <p class="card-text">{{ $cartProduct->product->details }}</p>
                                 </div>
                             </div>
-                            <div class="col-md-2 d-flex flex-column justify-content-around">
+                            <div class="col-md-3 col-sm-8 col-12 text-sm-center mx-sm-auto mx-auto text-center d-flex flex-column justify-content-around">
                                 <form action="{{ route('cart.saveForLater', $cartProduct->id) }}" method="POST">
                                     @csrf
 
-                                    <input class="btn btn-success w-75" type="submit" value="Save for later">
+                                    <input class="btn btn-success w-75 mb-sm-2 mb-2" type="submit" value="Save for later">
                                 </form>
                                 <form action="{{ route('cart.delete', $cartProduct->id) }}" method="POST">
                                     @csrf
@@ -48,21 +48,21 @@
                                     <input class="btn btn-danger w-75" type="submit" value="Remove">
                                 </form>
                             </div>
-                            <div class="col-md-1 pr-2 d-flex">
-                                <select name="quantity" id="{{ $cartProduct->id }}" class="form-control align-self-center quantitySelect">
+                            <div class="col-md-1 col-sm-8 col-8 mx-sm-auto mx-auto text-center mt-sm-3 mt-3 pr-2 d-md-flex">
+                                <select name="quantity" id="{{ $cartProduct->id }}" class="form-control align-self-center mx-sm-auto mx-auto quantitySelect">
                                     @for ($i = 1; $i <= $cartProduct->product->quantity; $i++)
                                         <option {{ $cartProduct->quantity === $i ? 'selected' : '' }} value="{{ $i }}">{{ $i }}</option>
                                     @endfor
                                 </select>
                             </div>
-                            <div class="col-md-2 d-flex justify-content-center">
+                            <div class="col-md-2 d-flex justify-content-center mt-sm-3">
                                 <p class="align-self-center cartPrice {{ $cartProduct->product_id }}">{{ $cartProduct->product->price * $cartProduct->quantity }}$</p>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
-            <div class="col-md-10 mt-4">
+            <div class="col-md-10 col-sm-12 col-11 mt-4" id="priceCard">
                 <div class="jumbotron row">
                     <div class="col-md-4">
                         <p>Shipping is free. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit, nulla nemo fugiat consequuntur animi aperiam?</p>
@@ -90,21 +90,21 @@
                     @foreach ($saveForLater as $savedItem)
                             <div class="card mb-3">
                                 <div class="row no-gutters">
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 col-sm-12 col-12">
                                         <a href="{{ route('products.show', $savedItem->product_id) }}"><img src="{{ asset('images/'.$savedItem->product->image) }}" alt="product"></a>
                                     </div>
-                                    <div class="col-md-5">
+                                    <div class="col-md-5 col-sm-8 col-8 mx-sm-auto text-sm-center mx-auto text-center">
                                         <div class="card-body">
                                             <a href="{{ route('products.show', $savedItem->product_id) }}"><h5 class="card-title">{{ $savedItem->product->name }}</h5></a>
                                             <p class="card-text">{{ $savedItem->product->details }}</p>
                                             
                                         </div>
                                     </div>
-                                    <div class="col-md-2 d-flex flex-column justify-content-around">
+                                    <div class="col-md-2 col-sm-8 col-12 text-sm-center mx-sm-auto mx-auto text-center d-flex flex-column justify-content-around">
                                         <form action="{{ route('cart.moveToCart', $savedItem->id) }}" method="POST">
                                             @csrf
 
-                                            <input class="btn btn-success w-75" type="submit" value="Move to cart">
+                                            <input class="btn btn-success w-75 mb-sm-2 mb-2" type="submit" value="Move to cart">
                                         </form>
                                         <form action="{{ route('cart.delete', $savedItem->id) }}" method="POST">
                                             @csrf
@@ -113,7 +113,7 @@
                                             <input class="btn btn-danger w-75" type="submit" value="Remove">
                                         </form>
                                     </div>
-                                    <div class="col-md-3 d-flex justify-content-center">
+                                    <div class="col-md-3 d-flex justify-content-center mt-sm-3 mt-3">
                                         <p class="align-self-center cartPrice {{ $savedItem->product_id }}">{{ $savedItem->product->price }}$</p>
                                     </div>
                                 </div>
