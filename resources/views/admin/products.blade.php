@@ -2,13 +2,13 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 col-sm-12 col-12">
             <h1 class="text-center">Products</h1>
             <hr>
         </div>
     </div>
     <div class="row mt-3">
-        <div class="col-md-12">
+        <div class="col-md-12 col-sm-12 col-12">
             @if ($errors->any())
                 <ul class="alert alert-danger">
                     @foreach ($errors->all() as $error)
