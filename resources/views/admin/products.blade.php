@@ -23,37 +23,39 @@
         <div class="col-md-12 d-flex justify-content-end mb-3">
             <button class="btn btn-success" id="addBtn">Add</button>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Details</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Date</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($products as $product)
+        <div class="col-md-12 col-sm-12 col-12">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>{{ $product->id }}</td>
-                        <td>{{ $product->name }}</td>
-                        <td>{{ $product->details }}</td>
-                        <td>{{ $product->price }}$</td>
-                        <td>{{ $product->quantity}}</td>
-                        <td>{{ date('j F, Y', strtotime($product->created_at)) }}</td>
-                        <td class="d-flex flex-column">
-                            <button class="btn btn-primary viewBtn" id="{{ $product->id }}">View</button>
-                            <button class="btn btn-success editBtn" id="edit-{{ $product->id }}">Edit</button>
-                            <button class="btn btn-danger deleteBtn" id="delete-{{ $product->id }}">Delete</button>
-                        </td>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Details</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Date</th>
+                        <th>Actions</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
-        {{ $products->links() }}
+                </thead>
+                <tbody>
+                    @foreach ($products as $product)
+                        <tr>
+                            <td>{{ $product->id }}</td>
+                            <td>{{ $product->name }}</td>
+                            <td>{{ $product->details }}</td>
+                            <td>{{ $product->price }}$</td>
+                            <td>{{ $product->quantity}}</td>
+                            <td>{{ date('j F, Y', strtotime($product->created_at)) }}</td>
+                            <td class="d-flex flex-column">
+                                <button class="btn btn-primary viewBtn" id="{{ $product->id }}">View</button>
+                                <button class="btn btn-success editBtn" id="edit-{{ $product->id }}">Edit</button>
+                                <button class="btn btn-danger deleteBtn" id="delete-{{ $product->id }}">Delete</button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            {{ $products->links() }}
+        </div>
     </div>
 
     <!-- modal -->
