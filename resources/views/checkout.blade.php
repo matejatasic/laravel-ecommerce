@@ -11,7 +11,7 @@
                 <h1>Checkout</h1>
                 <hr>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-10 mx-sm-auto">
                 <div id="errors">
                     @if ($errors->any())
                         @foreach ($errors->all() as $error)
@@ -87,38 +87,38 @@
                 </form>
             </div>
             <div class="col-md-1"></div>
-            <div class="col-md-5">
+            <div class="col-md-5 mt-4">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Your Order</h2>
+                        <h2 class="ml-5">Your Order</h2>
                     </div>
-                    <div class="col-md-12 mt-3" id="orders">
+                    <div class="col-md-12 col-sm-10 mx-sm-auto mt-3" id="orders">
                         @foreach ($cart as $cartProduct)
                             <div class="card mb-3">
                                 <div class="row no-gutters">
-                                    <div class="col-md-3 mt-4 pl-2">
+                                    <div class="col-md-3 col-sm-3 mt-4 pl-2">
                                         <img src="{{ asset('images/'.$cartProduct->product->image) }}" alt="cart_product_image">
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 col-sm-6">
                                         <div class="card-body">
                                             <h5 class="card-title">{{ $cartProduct->product->name }}</h5>
                                             <p class="card-text">{{ $cartProduct->product->details }}</p>
                                             <p>{{ $cartProduct->product->price }}$</p>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 d-flex justify-content-center align-items-center">
+                                    <div class="col-md-3 col-sm-3 d-flex justify-content-center align-items-center">
                                         <p class="text-center order-quantity">{{ $cartProduct->quantity }}</p>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
                         <div class="jumbotron row">
-                            <div class="col-md-10 d-flex flex-column">
+                            <div class="col-md-10 col-sm-10 d-flex flex-column">
                                 <p>Subtotal:</p>
                                 <p>Tax(10%):</p>
                                 <p><strong>Total:</strong></p>
                             </div>
-                            <div class="col-md-2 d-flex flex-column justify-content-start">
+                            <div class="col-md-2 col-sm-2 d-flex flex-column justify-content-start">
                                 <p>{{ $subtotal }}$</p>
                                 <p>{{ round($tax) }}$</p>
                                 <p><strong>{{ round($tax) + $subtotal }}$</strong></p>
