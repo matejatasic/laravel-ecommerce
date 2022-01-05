@@ -3,7 +3,7 @@
 @section('content')
 <div class="container pt-5">
     <div class="row justify-content-center mt-3">
-        <div class="col-md-8">
+        <div class="col-md-8 mb-3">
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 
@@ -66,6 +66,8 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>
+
+                                <a href="/login" class="btn btn-link">Already have an account?</a>
                             </div>
                         </div>
                     </form>
