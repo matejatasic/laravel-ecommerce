@@ -20,7 +20,7 @@
                 <div class="alert alert-success">{{ Session::get('success') }}</div>
             @endif
         </div>
-        <div class="col-md-12 d-flex justify-content-end mb-3">
+        <div class="col-md-12 col-sm-12 col-12 d-flex justify-content-end mb-3">
             <button class="btn btn-success" id="addBtn">Add</button>
         </div>
         <div class="col-md-12 col-sm-12 col-12">
