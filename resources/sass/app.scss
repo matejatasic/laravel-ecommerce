@@ -185,9 +185,17 @@ table {
     tbody {
         td:last-child {
             button, input {
-                width: 4rem;
+                width: 90%;
                 margin-bottom: 0.5rem;
             }
+        }
+    }
+}
+
+.categoriesTable {
+    td:last-child {
+        button {
+            width: 50%;
         }
     }
 }
@@ -232,5 +240,31 @@ table {
 
     #priceCard {
         margin: 1rem auto !important;
+    }
+
+    #sidebarMenu {
+        min-height: 3rem;
+        height: 5rem;
+
+        .nav-link {
+            font-size: 1rem;
+        }
+    }
+
+    .categoriesTable {
+        td:last-child {
+            button {
+                width: 80%;
+            }
+        }
+    }
+    
+}
+
+
+@media only screen and (max-width: 576px) {
+    #sidebarMenu {
+        padding: 0.8rem 0.5rem;
+        height: 22rem;
     }
 }
